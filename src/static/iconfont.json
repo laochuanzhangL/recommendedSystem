@@ -1,0 +1,16 @@
+{
+  "id": "3639350",
+  "name": "企业介绍",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "4604545",
+      "name": "c1-货车",
+      "font_class": "c-huoche",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    }
+  ]
+}

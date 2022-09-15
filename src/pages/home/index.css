@@ -1,0 +1,142 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.ant-layout-sider-children {
+  position: relative;
+}
+.ant-layout-sider-dark {
+  background: rgb(31, 42, 61) !important;
+}
+.ant-menu-dark {
+  background: rgb(31, 42, 61) !important ;
+}
+.trigger {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateX(50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 14px;
+  background-color: #ffffff;
+  border: solid 1px rgb(171, 171, 171);
+  border-radius: 50%;
+  font-size: 12px;
+  color: rgb(112, 112, 112);
+  cursor: pointer;
+}
+
+.site-layout .site-layout-background {
+  background: #fff;
+}
+.ant-menu-item-only-child {
+  font-family: "Arial Black", "Arial Normal", "Arial";
+  font-weight: 900;
+  font-style: normal;
+  color: #ffffff;
+}
+.ant-menu-item-selected {
+  font-size: 18px;
+  font-weight: 600;
+}
+.ant-layout-header {
+  line-height: normal;
+}
+Header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px !important;
+}
+Header .head-left,
+Header .head-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+Header .head-left span {
+  padding: 2px;
+  border: solid 1px rgb(209, 206, 206);
+}
+Header .head-right {
+  display: flex;
+}
+Header .head-right .head-right-img {
+  width: 60px;
+  height: 60px;
+  background-color: brown;
+  border-radius: 50%;
+}
+Header .head-right .head-right-text {
+  font-family: "Arial Black", "Arial Normal", "Arial";
+  font-weight: 900;
+  font-style: normal;
+  padding-left: 5px;
+}
+Header .head-right .head-right-text .head-right-text-tittle {
+  font-size: 10px;
+}
+.homeBack {
+  height: 100%;
+  min-height: 753Px;
+  width: 100%;
+  min-width: 768Px;
+  max-width: 1536Px;
+  margin: 0 auto;
+}
+.logo {
+  height: 37px;
+  margin: 16px;
+  line-height: 37px;
+  color: white;
+  background: rgb(111, 125, 140);
+  text-align: center;
+  font-family: "Arial Black", "Arial Normal", "Arial";
+  font-size: 20px;
+  font-weight: 600;
+  font-style: normal;
+  cursor: pointer;
+}
+.logo i {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 28px !important;
+}
+.logo-top {
+  height: 37px;
+  overflow: hidden;
+}
+@keyframes logoOpen {
+  from {
+    visibility: visible;
+    height: 0;
+  }
+  to {
+    height: 550%;
+  }
+}
+@keyframes logoClose {
+  from {
+    height: 550%;
+  }
+  to {
+    height: 0;
+  }
+}
+
+.down-logo-open {
+  position: relative;
+  z-index: 999;
+  width: 100%;
+  background-color: rgb(111, 125, 140);
+  animation: logoOpen 0.8s forwards;
+}
+.down-logo-close {
+  position: relative;
+  z-index: 999;
+  width: 100%;
+  background-color: rgb(111, 125, 140);
+  animation: logoClose 0.8s forwards;
+}
