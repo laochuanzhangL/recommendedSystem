@@ -1,0 +1,34 @@
+table{
+    width: 99%;
+    margin: 1px auto;
+    text-align: center;
+    border: 2px solid rgb(186, 184, 184);
+}
+
+tr button{
+    border-radius: 8px !important;
+}
+
+td{
+    border: 2px solid rgb(186, 184, 184);
+}
+
+/* 企业经营情况表格样式 */
+.ms-table-row{
+    border-bottom: 2px solid rgb(186, 184, 184);
+}
+
+/* 企业经营情况 */
+.ms{
+    font-size: 30px;
+}
+
+/* 企业经营情况表格里的大标题 */
+.ms-big-title{
+    font-size: 20px;
+}
+
+/* 企业经营情况表格里的标题单元格 */
+.ms-title-td{
+   width: 30px;
+}

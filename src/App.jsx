@@ -3,15 +3,15 @@ import { BrowserRouter, Route, Switch,Redirect } from 'react-router-dom'
 import 'antd/dist/antd.min.css'
 import './App.css'
 
-import Home from './pages/home'
+import Routes from './utils/routes'
 
 export default function App() {
   return (
     <div className="wrap">
       <BrowserRouter>
         <Switch>
-          <Route path='/home' component={Home} />
-          <Redirect to='home' />
+          {Routes.map((item)=>(<Route path={item.path} component={item.component}/>))}
+          <Redirect to='/home'/>
         </Switch>
       </BrowserRouter>
     </div>

@@ -1,0 +1,41 @@
+table{
+    width: 99%;
+    margin: 1px auto;
+    text-align: center;
+    border: 2px solid rgb(186, 184, 184);
+}
+
+tr button{
+    border-radius: 8px !important;
+}
+
+td{
+    border: 2px solid rgb(186, 184, 184);
+}
+
+/* 企业基本信息表格样式 */
+.cbi-table-row{
+    border-bottom: 2px solid rgb(186, 184, 184);
+}
+
+.no-cbi-table-row,.no-cbi-table-row td{
+    display: none;
+    border: 0px !important;
+}
+
+/* 企业基本信息 */
+.cbi{
+    font-size: 30px;
+}
+
+/* 企业基本信息表格里的大标题 */
+.cbi-big-title{
+    font-size: 20px;
+}
+
+/* 企业基本信息表格里的标题单元格 */
+.cbi-title-td{
+   width: 200px;
+}
+
+
