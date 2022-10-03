@@ -21,15 +21,15 @@ export default function SituationTable() {
   for (let i = 0; i <= 100; i++) {
     number.push(i);
   }
-  // 车辆
+  // 车辆选项
   const carCostGeneral = ["新车", "二手车"];
   const carCostSmall = ["新车专票", "新车普票", "二手车专票", "二手车普票"];
   const carCostNatural = ["有票", "无票"];
-  // 人工
+  // 人工选项
   const LaborCostGeneral = ["运输行业", "人力资源和灵活用工"];
   const LaborCostSmall = ["专票", "普票"];
   const LaborCostNatural = ["外包有票", "外包无票"];
-  // 办公
+  // 办公选项
   const OfficeCostSmall = ["专票", "普票"];
   const OfficeCostNatural = ["有票", "无票"];
 
@@ -107,9 +107,9 @@ export default function SituationTable() {
         </tr>
         <tr className="ms-table-row">
           <td className="ms-title-td">年营业额(万元)</td>
-          <td colSpan={2}>1000</td>
+          <td className="ms-ic-info-td" colSpan={2}>1000</td>
           <td className="ms-title-td">是否兼营销售纳税人</td>
-          <td>
+          <td className="ms-ic-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
                 <input type="radio" name="isSalesTaxpayer" />是
@@ -130,12 +130,12 @@ export default function SituationTable() {
         {/* 运输服务 */}
         <tr className="ms-table-row">
           <td className="ms-title-td">运输服务</td>
-          <td>50%</td>
-          <td>500</td>
+          <td className="ms-ic-info-td">50%</td>
+          <td className="ms-ic-info-td">500</td>
           <td className="ms-title-td" rowSpan={5}>
             甲方资质
           </td>
-          <td>
+          <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
                 <input type="radio" name="isTransportationServices" />
@@ -173,9 +173,9 @@ export default function SituationTable() {
         {/* 仓储、搬运服务 */}
         <tr className="ms-table-row">
           <td className="ms-title-td">仓储、搬运服务</td>
-          <td>20%</td>
-          <td>200</td>
-          <td>
+          <td className="ms-ic-info-td">20%</td>
+          <td className="ms-ic-info-td">200</td>
+          <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
                 <input type="radio" name="isTransportationServices" />
@@ -213,9 +213,9 @@ export default function SituationTable() {
         {/* 车辆销售 */}
         <tr className="ms-table-row">
           <td className="ms-title-td">车辆销售</td>
-          <td>10%</td>
-          <td>100</td>
-          <td>
+          <td className="ms-ic-info-td">10%</td>
+          <td className="ms-ic-info-td">100</td>
+          <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
                 <input type="radio" name="isTransportationServices" />
@@ -253,9 +253,9 @@ export default function SituationTable() {
         {/* 运输代理服务 */}
         <tr className="ms-table-row">
           <td className="ms-title-td">运输代理服务</td>
-          <td>20%</td>
-          <td>200</td>
-          <td>
+          <td className="ms-ic-info-td">20%</td>
+          <td className="ms-ic-info-td">200</td>
+          <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
                 <input type="radio" name="isTransportationServices" />
@@ -293,9 +293,9 @@ export default function SituationTable() {
         {/* 挂靠服务 */}
         <tr className="ms-table-row">
           <td className="ms-title-td">挂靠服务</td>
-          <td>0%</td>
-          <td>0</td>
-          <td>
+          <td className="ms-ic-info-td">0%</td>
+          <td className="ms-ic-info-td">0</td>
+          <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
                 <input type="radio" name="isTransportationServices" />
@@ -332,8 +332,8 @@ export default function SituationTable() {
         </tr>
         <tr className="ms-table-row">
           <td className="ms-title-td">收入总计</td>
-          <td>100%</td>
-          <td>1000</td>
+          <td className="ms-ic-info-td">100%</td>
+          <td className="ms-ic-info-td">1000</td>
           <td className="ms-title-td">年经营成本(万元)</td>
           <td>500</td>
         </tr>
@@ -352,12 +352,12 @@ export default function SituationTable() {
         {/* 车辆成本 */}
         <tr className="ms-table-row">
           <td className="ms-title-td">车辆成本</td>
-          <td>40</td>
-          <td>200</td>
+          <td className="ms-ex-info-td">40</td>
+          <td className="ms-ex-info-td">200</td>
           <td className="ms-title-td" rowSpan={5}>
             供应商资质
           </td>
-          <td>
+          <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
                 <input type="radio" name="isTransportationServices" />
@@ -381,7 +381,7 @@ export default function SituationTable() {
                 <TextDropdown
                   arr={carCostSmall}
                   defaultValue={"新车专票"}
-                  popupClassName={"selectDropdown-short"}
+                  popupClassName={"selectDropdown-long"}
                 />
                 ) (
                 <NumDropdown
@@ -413,9 +413,9 @@ export default function SituationTable() {
         {/* 人工成本 */}
         <tr className="ms-table-row">
           <td className="ms-title-td">人工成本</td>
-          <td>20</td>
-          <td>100</td>
-          <td>
+          <td className="ms-ex-info-td">20</td>
+          <td className="ms-ex-info-td">100</td>
+          <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
                 <input type="radio" name="isTransportationServices" />
@@ -423,7 +423,7 @@ export default function SituationTable() {
                 <TextDropdown
                   arr={LaborCostGeneral}
                   defaultValue={"运输行业"}
-                  popupClassName={"selectDropdown-short"}
+                  popupClassName={"selectDropdown-long"}
                 />
                 ) (
                 <NumDropdown
@@ -455,7 +455,7 @@ export default function SituationTable() {
                 <TextDropdown
                   arr={LaborCostNatural}
                   defaultValue={"外包有票"}
-                  popupClassName={"selectDropdown-short"}
+                  popupClassName={"selectDropdown-long"}
                 />
                 ) (
                 <NumDropdown
@@ -471,9 +471,9 @@ export default function SituationTable() {
         {/* 办公成本 */}
         <tr className="ms-table-row">
           <td className="ms-title-td">办公成本</td>
-          <td>5</td>
-          <td>25</td>
-          <td>
+          <td className="ms-ex-info-td">5</td>
+          <td className="ms-ex-info-td">25</td>
+          <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
                 <input type="radio" name="isTransportationServices" />
@@ -523,9 +523,9 @@ export default function SituationTable() {
         {/* 运输成本（油费） */}
         <tr className="ms-table-row">
           <td className="ms-title-td">运输成本（油费）</td>
-          <td>25</td>
-          <td>125</td>
-          <td>
+          <td className="ms-ex-info-td">25</td>
+          <td className="ms-ex-info-td">125</td>
+          <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
                 <input type="radio" name="isTransportationServices" />
@@ -543,9 +543,9 @@ export default function SituationTable() {
         {/* 运输成本（路桥费） */}
         <tr className="ms-table-row">
           <td className="ms-title-td">运输成本（路桥费）</td>
-          <td>10</td>
-          <td>50</td>
-          <td>
+          <td className="ms-ex-info-td">10</td>
+          <td className="ms-ex-info-td">50</td>
+          <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
                 <input type="radio" name="isTransportationServices" />
@@ -562,8 +562,8 @@ export default function SituationTable() {
         </tr>
         <tr className="ms-table-row">
           <td className="ms-title-td">支出总计</td>
-          <td>100</td>
-          <td>500</td>
+          <td className="ms-ex-info-td">100</td>
+          <td className="ms-ex-info-td">500</td>
           <td className="ms-title-td">企业利润(万元)</td>
           <td>500</td>
         </tr>
@@ -574,17 +574,16 @@ export default function SituationTable() {
         </tr>
         <tr className="ms-table-row">
           <td className="ms-title-td">高管人数</td>
-          <td>10</td>
+          <td className="ms-ar-info-td" colSpan={2}>10</td>
           <td className="ms-title-td">司机人数</td>
-          <td>30</td>
+          <td className="ms-ar-info-td">30</td>
         </tr>
         <tr className="ms-table-row">
           <td className="ms-title-td">平均工资</td>
-          <td>20000</td>
+          <td className="ms-ar-info-td" colSpan={2}>20000</td>
           <td className="ms-title-td">平均工资</td>
-          <td>10000</td>
+          <td className="ms-ar-info-td">10000</td>
         </tr>
-
         <tr className="ms-table-row">
           <td colSpan={5}>
             <Space>

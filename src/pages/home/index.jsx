@@ -17,7 +17,7 @@ export default function Home(){
   const [isOpen, setIsOpen] = useState(false);
   const [showTime, setShowTime] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [mainCompanies,setMainCompanies]=useState([{name:"主体公司1xxx",checked:false},{name:"主体公司2xxx",checked:true},{name:"主体公司2xxx",checked:false},])
+  const [mainCompanies,setMainCompanies]=useState([{name:"主体公司1xxx",checked:true},{name:"主体公司2xxx",checked:false},{name:"主体公司3xxx",checked:false},])
   const [isChecked,setIsChecked]=useState(false)
 
   // 实时获取时间
@@ -164,7 +164,7 @@ export default function Home(){
         </Header>
         <Space
           style={{width:'99%',marginTop:'5px',justifyContent:"space-between",paddingLeft:"16px"}}>
-          <div style={{display:"flex"}} style={{display:pathname=='/home/basic'?"flex":"none"}} >
+          <div  style={{display:pathname=='/home/basic'?"flex":"none"}} >
             {
               mainCompanies.map((item,index) => {
                 return <div className={item.checked?"mainCompany mainCompany-active":"mainCompany "} key={index} onClick={itemClick.bind(this,item,index)} >{item.name}</div>
