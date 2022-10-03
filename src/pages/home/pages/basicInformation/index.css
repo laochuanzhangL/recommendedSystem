@@ -1,0 +1,21 @@
+
+.no-cbi-table-row,.no-cbi-table-row td{
+    display: none;
+}
+
+/* 企业基本信息 */
+.cbi{
+    font-size: 30px;
+}
+
+/* 企业基本信息表格里的大标题 */
+.cbi-big-title{
+    font-size: 20px;
+}
+
+/* 企业基本信息表格里的标题单元格 */
+.cbi-title-td{
+   width: 200px;
+}
+
+
