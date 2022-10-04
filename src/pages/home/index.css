@@ -2,6 +2,20 @@
   margin: 0;
   padding: 0;
 }
+table{
+  width: 99%;
+  margin: 1px auto;
+  text-align: center;
+  border: 2px solid rgb(221, 221, 221);
+}
+
+tr button{
+  border-radius: 8px !important;
+}
+
+td{
+  border: 1px solid rgb(221, 221, 221);
+}
 .ant-layout-sider-children {
   position: relative;
 }
@@ -78,13 +92,14 @@ Header .head-right .head-right-text {
 Header .head-right .head-right-text .head-right-text-tittle {
   font-size: 10px;
 }
+.saveBtn{
+  border-color: #fff !important;
+}
 .homeBack {
   height: 100%;
-  min-height: 753Px;
   width: 100%;
-  min-width: 768Px;
-  max-width: 1536Px;
   margin: 0 auto;
+  position: relative;
 }
 .logo {
   height: 37px;
@@ -139,4 +154,27 @@ Header .head-right .head-right-text .head-right-text-tittle {
   width: 100%;
   background-color: rgb(111, 125, 140);
   animation: logoClose 0.8s forwards;
+}
+/* 主体公司 */
+.mainCompany{
+  display: flex;
+  width: 130px;
+  height: 32px;
+  margin-right: 5px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(228, 227, 227);
+  border: 1px solid rgb(186, 184, 184);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.mainCompany-active{
+  border: 1px solid orange ;
+  color: orange;
+}
+.addMainCompany{
+  font-size: 32px;
+  cursor: pointer;
+  opacity: 0.5;
 }

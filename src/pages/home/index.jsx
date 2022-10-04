@@ -1,41 +1,95 @@
 import React from "react";
-import { CaretLeftOutlined, CaretRightOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { CaretLeftOutlined, CaretRightOutlined,PlusCircleOutlined } from "@ant-design/icons";
+import { useState, useEffect } from "react";
 import { Route, Switch, useHistory, Redirect } from "react-router-dom";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Button, Space,Modal,Input,message  } from "antd";
 
-import Basic from "./basicInformation";
-import Manage from "./manageSituation";
-import Relevant from "./relevantIssues";
-import Solve from "./solveAndCost";
-import Success from "./successCase";
-import Detail from "./detailedIntroduce";
-import Sign from "./signContract";
+import Routes from "./routes";
 
 import "./index.css";
 import "../../static/iconfont.css";
 
-export default function Home() {
+export default function Home(){
   const history = useHistory();
   const { Header, Sider, Content } = Layout;
   const [collapsed, setCollapsed] = useState(false);
-  const [isHidden, setisHidden] = useState(true);
-  const [isOpen, setisOpen] = useState(false);
+  const [isHidden, setIsHidden] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const [showTime, setShowTime] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [mainCompanies,setMainCompanies]=useState([{name:"主体公司1xxx",checked:true},{name:"主体公司2xxx",checked:false},{name:"主体公司3xxx",checked:false},])
+  const [isChecked,setIsChecked]=useState(false)
+
+  // 实时获取时间
+  function formateDate(time) {
+    if (!time) return "";
+    let date = new Date(time);
+    return (
+      date.getFullYear() +
+      "年" +
+      (date.getMonth() + 1) +
+      "月" +
+      date.getDate() +
+      "日 " +
+      date.getHours() +
+      ":" +
+      date.getMinutes() +
+      ":" +
+      date.getSeconds()
+    );
+  }
+
+  // Home组件挂载时显示时间
+  useEffect(() => {
+    setInterval(() => {
+      const currenTime = formateDate(new Date().getTime());
+      setShowTime(currenTime);
+    }, 1000);
+  }, []);
 
   // logo点击动画
   const logoOpen = () => {
-    setisHidden(false);
-    setisOpen(true);
+    setIsHidden(false);
+    setIsOpen(true);
   };
   const logoClose = function (e) {
     e.stopPropagation();
-    setisOpen(false);
+    setIsOpen(false);
   };
 
   // 点击菜单函数
   const change = (e) => {
-    history.replace(`/home/${e.key}`);
+    history.push(`/home/${e.key}`);
   };
+  // url
+  const urlParams = new URL(window.location.href);
+  const pathname = urlParams?.pathname;
+
+
+  // 点击添加主体公司函数
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    message.success("添加成功");
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const addMainCompany=() => {
+    setMainCompanies("添加")
+  }
+    // 点击active
+  const itemClick=function(item,index){
+    mainCompanies.forEach(item=>{
+        item.checked = false;
+    })
+    mainCompanies[index].checked = true;
+}
+
   return (
     <Layout className="homeBack">
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -59,7 +113,7 @@ export default function Home() {
           items={[
             {
               key: "basic",
-              label: "企业基本情况",
+              label: "企业基本信息",
             },
             {
               key: "manage",
@@ -98,37 +152,49 @@ export default function Home() {
             padding: 0,
           }}
         >
-          <div className="head-left">
-            <span>2022年9月10日 7:05:20</span>
-          </div>
+          <div className="head-left">{showTime}</div>
           <div className="head-right">
             <div className="head-right-img"></div>
             <div className="head-right-text">
-              <div className="head-right-text-tittle">xxxxx</div>
-              <div>TEST管理员</div>
+              {/* 这里的具体信息要用参数实时获取 */}
+              <div className="head-right-text-tittle">20230834</div>
+              <div>张峰管理员</div>
             </div>
           </div>
         </Header>
+        <Space
+          style={{width:'99%',marginTop:'5px',justifyContent:"space-between",paddingLeft:"16px"}}>
+          <div  style={{display:pathname=='/home/basic'?"flex":"none"}} >
+            {
+              mainCompanies.map((item,index) => {
+                return <div className={item.checked?"mainCompany mainCompany-active":"mainCompany "} key={index} onClick={itemClick.bind(this,item,index)} >{item.name}</div>
+              })
+            }
+            <div onClick={showModal} ><PlusCircleOutlined className="addMainCompany"/></div>
+            <Modal title="请输入公司名字" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Input placeholder="主题公司名字"/>
+             </Modal>
+          </div>
+          <div>
+          <Button className="saveBtn" type="primary" style={{borderRadius:'5px'}} size="middle">保存</Button>
+          <Button className="editBtn" style={{borderRadius:'5px'}} size="middle">修改</Button>
+          </div>
+        </Space>
         <Content
           className="site-layout-background"
           style={{
-            margin: "24px 16px",
-            padding: 24,
-            minHeight: 280,
+            margin: "5px 16px 0px 16px",
+            padding: 0,
           }}
         >
           <Switch>
-            <Route path="/home/basic" component={Basic} />
-            <Route path="/home/manage" component={Manage} />
-            <Route path="/home/relevant" component={Relevant} />
-            <Route path="/home/solve" component={Solve} />
-            <Route path="/home/success" component={Success} />
-            <Route path="/home/detail" component={Detail} />
-            <Route path="/home/sign" component={Sign} />
+            {Routes.map((item) => (
+              <Route path={item.path} component={item.component} />
+            ))}
             <Redirect to="/home/basic" />
           </Switch>
         </Content>
       </Layout>
     </Layout>
   );
-}
+};

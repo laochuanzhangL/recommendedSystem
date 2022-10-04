@@ -1,0 +1,41 @@
+.no-cbi-table-row,.no-cbi-table-row td{
+    display: none;
+}
+
+/* 企业基本信息 */
+.cbi{
+    font-size: 30px;
+}
+
+/* 企业基本信息表格里的大标题 */
+.cbi-big-title{
+    font-size: 20px;
+}
+
+/* 企业基本信息表格里的标题单元格 */
+.cbi-title-td{
+   width: 200px;
+}
+
+/* 企业基本信息表格里的内容单元格 */
+/* 工商信息 */
+.cbi-tb-info-td{
+   width: 446px;
+}
+
+/* 股东信息 */
+.cbi-sh-info-td{
+    width:446px;
+}
+
+/* 对外投资信息 */
+.cbi-fi-info-com-td{
+    width: 245px;
+}
+
+/* 税务情况 */
+.cbi-tax-info-td{
+    width: 996px;
+}
+
+
