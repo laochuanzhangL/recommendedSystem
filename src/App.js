@@ -4,16 +4,16 @@ import 'antd/dist/antd.min.css'
 // import './App.css'
 
 import Home from './pages/home'
-import Register from './pages/Login'
+import Login from './pages/Login'
 
 export default function App() {
   return (
     <div className="wrap">
       <BrowserRouter>
         <Switch>
-          <Route path='/register' component={Register} />
+          <Route path='/login/*' component={Login} />
           <Route path='/home' component={Home} />
-          <Redirect to='register' />
+          <Redirect to='/login/login' />
         </Switch>
       </BrowserRouter>
     </div>

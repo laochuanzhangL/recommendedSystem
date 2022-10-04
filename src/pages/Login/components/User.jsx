@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-// import { useNavigate } from "react-router";
-import { Form, Input, Button, Checkbox, Skeleton } from "antd";
-import {
-  UserOutlined,
-  LockOutlined,
-  SafetyCertificateOutlined,
-} from "@ant-design/icons";
+import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
+import { Form, Input, Button, Checkbox, Tabs } from "antd";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
 // import httpUtill from "../../../utils/httpUtil";
 
-export const User = () => {
+import "./User.css";
+import BG from "../../../utils/BG";
+
+const Login = () => {
+  // 提交表单信息
   const onFinish = (values) => {
     // const { code } = values;
     // delete values.code;
@@ -17,21 +17,6 @@ export const User = () => {
     //   code,
     // };
     console.log(values);
-  };
-
-  const [serverCode, setServerCode] = useState("");
-
-  useEffect(() => {
-    getServerCode();
-  }, []);
-
-  const getServerCode = () => {
-    // httpUtill.getServerCode("3212960476@qq.com").then((res) => {
-    //   console.log(res);
-    // });
-    // httpUtill.getRegisterStatus().then((res) => {
-    //   console.log(res);
-    // });
   };
 
   return (
@@ -43,88 +28,40 @@ export const User = () => {
       }}
       onFinish={onFinish}
     >
+      {/* 输入工号 */}
       <Form.Item
-        name="userName"
+        name="userID"
         rules={[
           {
             required: true,
-            message: "please enter your account!",
+            message: "请输入您的工号！",
           },
         ]}
       >
         <Input
           prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="post office addressing"
+          placeholder=" 员工工号"
         />
       </Form.Item>
 
+      {/* 输入密码 */}
       <Form.Item
         name="password"
         rules={[
           {
             required: true,
-            message: "please enter your password!",
+            message: "密码不能为空！",
           },
         ]}
       >
         <Input.Password
           prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
-          placeholder="password"
+          placeholder=" 登录密码"
         />
       </Form.Item>
 
-      {/* <div
-        style={{
-          position: "relative",
-        }}
-      >
-        <Form.Item
-          name="code"
-          rules={[
-            {
-              required: true,
-              message: "please enter the verification code!",
-            },
-          ]}
-          style={{
-            width: "72%",
-          }}
-        >
-          <Input
-            prefix={<SafetyCertificateOutlined />}
-            type="text"
-            placeholder="verification code"
-          />
-        </Form.Item> */}
-        {/* {serverCode ? (
-          <img
-            src={serverCode}
-            alt=""
-            style={{
-              width: "28%",
-              height: "100%",
-              position: "absolute",
-              top: 0,
-              right: 0,
-              cursor: "pointer",
-            }}
-            onClick={getServerCode}
-          />
-        ) : (
-          <Skeleton.Button
-            active
-            style={{
-              width: "28%",
-              position: "absolute",
-              top: 0,
-              right: 0,
-              cursor: "pointer",
-            }}
-          />
-        )}
-      </div> */}
-
+      {/* 提交表单 */}
       <Form.Item>
         <Button
           type="primary"
@@ -135,11 +72,46 @@ export const User = () => {
         </Button>
       </Form.Item>
 
+      {/* 记住密码&跳转登录 */}
       <Form.Item>
         <Form.Item valuePropName="checked" noStyle>
-          <Checkbox>remember password</Checkbox>
+          <Checkbox>记住密码</Checkbox>
+          <Link
+            to="/login/register"
+            style={{ color: "rgb(24,144,255)", marginLeft: "88px" }}
+          >
+            没有账号？点此注册 &gt;
+          </Link>
         </Form.Item>
       </Form.Item>
     </Form>
   );
 };
+
+export function User() {
+  return (
+    <Fragment>
+      <div className="login-wrap">
+        <div className="login-top">优 化 服 务 评 估 系 统</div>
+        <Tabs
+          className="login-select-form"
+          defaultActiveKey="1"
+          centered={true}
+          tabBarGutter={80}
+          items={[
+            {
+              label: ` 用 户 注 册 `,
+              key: "1",
+              children: <Login />,
+              className: "login-select-form-content",
+            },
+          ]}
+        />
+        <div className="login-text">
+          Copyright &copy; {new Date().getFullYear()} MISLab 版权所有
+        </div>
+        <BG />
+      </div>
+    </Fragment>
+  );
+}
