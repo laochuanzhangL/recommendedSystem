@@ -1,0 +1,62 @@
+.logo {
+  height: 37px;
+  margin: 16px;
+  line-height: 37px;
+  color: white;
+  background: rgb(111, 125, 140);
+  text-align: center;
+  font-family: "Arial Black", "Arial Normal", "Arial";
+  font-size: 20px;
+  font-weight: 600;
+  font-style: normal;
+  cursor: pointer;
+}
+.logo i {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 28px !important;
+}
+.logo-top {
+  height: 38px;
+  overflow: hidden;
+  text-align: start;
+  border-bottom: 1px solid rgb(183, 190, 197);
+}
+@keyframes logoOpen {
+  from {
+    visibility: visible;
+    height: 0;
+  }
+  to {
+    height: 318%;
+  }
+}
+@keyframes logoClose {
+  from {
+    height: 318%;
+  }
+  to {
+    height: 0;
+  }
+}
+
+.down-logo-open {
+  position: relative;
+  z-index: 999;
+  width: 100%;
+  background-color: rgb(111, 125, 140);
+  animation: logoOpen 0.8s forwards;
+  text-align: start;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.down-logo-open div {
+  border-bottom: 1px solid rgb(183, 190, 197);
+}
+.down-logo-close {
+  position: relative;
+  z-index: 999;
+  width: 100%;
+  background-color: rgb(111, 125, 140);
+  animation: logoClose 0.8s forwards;
+}
