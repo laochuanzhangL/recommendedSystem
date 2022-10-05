@@ -1,204 +1,226 @@
-import React, { useState, useRef } from 'react'
-import { Form, Input, Button, message } from 'antd'
-// import { useHistory } from 'react-router'
-import {
-  UserOutlined,
-  LockOutlined,
-  SafetyCertificateOutlined,
-  FileMarkdownOutlined,
-} from '@ant-design/icons'
-// import httpUtil from '../../../utils/httpReq'
+import React from "react";
+import { Button, Form, Input, Radio, message, Select, Cascader } from "antd";
 
-export const Register = () => {
-  const [loading, setLoading] = useState(false)
-  const eamilRef = useRef()
+import BG from "../../../utils/BG";
+import "./Register.scss";
+
+const { Option } = Select;
+
+export function Register() {
+  const userStatus = ["在岗", "离职", "请假", "实习", "兼职", "停职留薪"];
+  const userPosition = [
+    {
+      value: "shichang",
+      label: "市场部",
+      children: [
+        {
+          value: "zongjian",
+          label: "市场总监",
+        },
+        {
+          value: "jingli",
+          label: "经理",
+        },
+        {
+          value: "zhuguan",
+          label: "主管",
+        },
+        {
+          value: "zhuanyuan",
+          label: "市场专员",
+        },
+      ],
+    },
+    {
+      value: "xiangmu",
+      label: "项目部",
+      children: [
+        {
+          value: "jingli",
+          label: "项目经理",
+        },
+        {
+          value: "jinglizhuli",
+          label: "项目经理助理",
+          children: [
+            { value: "caiwu", label: "财务" },
+            { value: "shuiwu", label: "税务" },
+            { value: "fawu", label: "法务" },
+          ],
+        },
+        {
+          value: "kuaiji",
+          label: "项目会计",
+        },
+      ],
+    },
+    {
+      value: "zongjingban",
+      label: "总经办",
+      children: [
+        {
+          value: "zongjingli",
+          label: "总经理",
+        },
+        {
+          value: "mishu",
+          label: "经理秘书",
+        },
+        {
+          value: "zhuli",
+          label: "经理助理",
+        },
+      ],
+    },
+  ];
+  // 提交表单后正确和错误的信息
   const onFinish = (values) => {
-    setLoading(true)
-    const { mailCode } = values
-    delete values.mailCode
-    delete values.rePassword
-    const data = { userMessage: { ...values }, code: mailCode }
-    // httpUtil.register(data).then(
-    //   (res) => {
-    //     if (res.status == 9999) {
-    //       message.success(res.msg)
-    //     } else message.error(res.msg)
-    //     setLoading(false)
-    //   },
-    //   () => {
-    //     setLoading(false)
-    //   }
-    // )
-  }
-
-  const getEmailCode = () => {
-    const eamil = eamilRef.current.state.value
-    if (!eamil) {
-      message.warning('请先输入邮箱号')
-    }
-    // httpUtil.getEmailCode(eamil).then((res) => {
-    //   console.log(res)
-    //   if (res.status == 0) {
-    //     message.success('验证码发送成功')
-    //   } else {
-    //     message.warning('验证码发送失败')
-    //   }
-    // })
-  }
+    console.log(values);
+  };
+  const onFinishFailed = (errorInfo) => {
+    message.error(errorInfo.errorFields[0].errors[0]);
+  };
 
   return (
-    <Form
-      name="normal_login"
-      className="login-form"
-      initialValues={{
-        remember: true,
-      }}
-      onFinish={onFinish}
-    >
-      <Form.Item
-        name="userName"
-        rules={[
-          {
-            required: true,
-            message: '请输入您的账号!',
-          },
-        ]}
+    <div className="Register">
+      <Form
+        name="basic"
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
       >
-        <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="账号"
-        />
-      </Form.Item>
+        <div className="reg-center">
+          {/* 标题 */}
+          <div className="center-item">
+            <span style={{ textAlign: "center", fontSize: "30px" }}>
+            财 税 服 务 评 估 系 统
+            </span>
+          </div>
 
-      <Form.Item
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: '请输入您的密码!',
-          },
-        ]}
-      >
-        <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="密码"
-        />
-      </Form.Item>
+          {/* 中间注册信息 */}
+          {/* 工号&密码 */}
+          <div className="center-item">
+            <div className="left">
+              <div className="text">
+                <span style={{ color: "red" }}>*</span>工 号:
+              </div>
+              <Form.Item
+                name="userId"
+                noStyle
+                rules={[{ required: true, message: "请输入您的工号!" }]}
+              >
+                <Input className="reg-msg-write" placeholder="请输入您的工号" />
+              </Form.Item>
+            </div>
+            <div className="right">
+              <div className="text">
+                <span style={{ color: "red" }}>*</span>登录密码:
+              </div>
+              <Form.Item
+                name="password"
+                noStyle
+                rules={[{ required: true, message: "请输入您的密码!" }]}
+              >
+                <Input
+                  className="reg-msg-write"
+                  placeholder="请输入您的密码"
+                  type="password"
+                />
+              </Form.Item>
+            </div>
+          </div>
 
-      <Form.Item
-        name="rePassword"
-        dependencies={['password']}
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: '请确认您的密码!',
-          },
-          ({ getFieldValue }) => ({
-            validator(_, value) {
-              if (!value || getFieldValue('password') === value) {
-                return Promise.resolve()
-              }
-              return Promise.reject(new Error('您输入的两次密码不匹配!'))
-            },
-          }),
-        ]}
-      >
-        <Input.Password
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="确认密码"
-        />
-      </Form.Item>
+          {/* 姓名&性别 */}
+          <div className="center-item">
+            <div className="left">
+              <div className="text">
+                <span style={{ color: "red" }}>*</span>姓 名:
+              </div>
+              <div className="reg-msg-write">jiejie</div>
+            </div>
+            <div className="right">
+              <div className="text">
+                <span style={{ color: "red" }}>*</span>性 别:
+              </div>
+              <div className="reg-msg-write" style={{ borderBottom: "none" }}>
+                <Radio defaultChecked={true} disabled>
+                  男
+                </Radio>
+                <Radio disabled>女</Radio>
+              </div>
+            </div>
+          </div>
 
-      <Form.Item
-        name="email"
-        rules={[
-          {
-            required: true,
-            message: '请输入您的邮箱号!',
-          },
-        ]}
-      >
-        <Input
-          prefix={<FileMarkdownOutlined className="site-form-item-icon" />}
-          placeholder="邮箱号"
-          ref={eamilRef}
-        />
-      </Form.Item>
-      <div
-        style={{
-          position: 'relative',
-        }}
-      >
-        <Form.Item
-          name="mailCode"
-          rules={[
-            {
-              required: true,
-              message: '请输入您的邮箱验证码!',
-            },
-          ]}
-          style={{
-            width: '72.3%',
-          }}
-        >
-          <Input
-            prefix={
-              <SafetyCertificateOutlined className="site-form-item-icon" />
-            }
-            placeholder="邮箱验证码"
-          />
-        </Form.Item>
-        <Button
-          style={{
-            width: '28%',
-            height: '100%',
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            cursor: 'pointer',
-          }}
-          onClick={getEmailCode}
-        >
-          获取验证码
-        </Button>
-      </div>
+          {/* 所属部门&员工状态 */}
+          <div className="center-item">
+            <div className="left">
+              <div className="text">
+                <span style={{ color: "red" }}>*</span>所属部门:
+              </div>
+              <Select defaultValue="市场部" className="reg-msg-write">
+                <Option value="shichang" disabled>
+                  市场部
+                </Option>
+                <Option value="xiangmu" disabled>
+                  项目部
+                </Option>
+                <Option value="zongjingban" disabled>
+                  总经办
+                </Option>
+              </Select>
+            </div>
+            <div className="right">
+              <div className="text">
+                <span style={{ color: "red" }}>*</span>员工状态:
+              </div>
+              <Select defaultValue="在岗" className="reg-msg-write">
+                {userStatus.map((item) => {
+                  return (
+                    <Option value={`${item}`} key={`${item}`} disabled>
+                      {item}
+                    </Option>
+                  );
+                })}
+              </Select>
+            </div>
+          </div>
 
-      <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          style={{ width: '100%', marginTop: 20 }}
-          loading={loading}
-        >
-          注册
-        </Button>
-      </Form.Item>
+          {/* 职位 */}
+          <div className="center-item">
+            <div className="left">
+              <div className="text">
+                <span style={{ color: "red" }}>*</span>职 位:
+              </div>
+              <Cascader
+                options={userPosition}
+                placeholder="职 位"
+                className="reg-msg-write"
+              />
+            </div>
+            <div className="right"></div>
+          </div>
 
-      <div
-        className="marked"
-        style={{
-          width: '80%',
-          margin: '0 auto 10px',
-          height: 12,
-          borderBottom: '1px solid #ddd',
-          textAlign: 'center',
-        }}
-      > 
-        <span
-          className="words"
-          style={{
-            background: 'white',
-            paddingLeft: 8,
-            paddingRight: 8,
-            display: 'inline-block',
-          }}
-        >
-          请记住您的账号和密码
-        </span>
-      </div>
-    </Form>
-  )
+          {/* 注册按钮 */}
+          <div className="center-item">
+            <Button
+              type="primary"
+              className="reg-button-center"
+              htmlType="submit"
+            >
+              注册
+            </Button>
+          </div>
+
+          {/* 版权信息 */}
+          <div className="center-item">
+            <span style={{ fontSize: "16px" }}>
+              Copyright &copy; {new Date().getFullYear()} MISLab 版权所有
+            </span>
+          </div>
+        </div>
+      </Form>
+      <BG />
+    </div>
+  );
 }

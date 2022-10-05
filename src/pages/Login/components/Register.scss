@@ -1,0 +1,82 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Courier New", Courier, monospace;
+}
+
+// 用于设置flex布局
+@mixin flexBox($justify: space-between, $align: flex-start) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+.Register {
+  width: calc(100vw);
+  height: calc(100vh);
+  @include flexBox(center, center);
+  .reg-center {
+    width: 950px;
+    height: 520px;
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 6px;
+    border: 1px solid rgb(152, 205, 255);
+    box-shadow: 0px 0px 10px 10px rgba(210, 210, 210, 0.2);
+    @include flexBox(flex-start, center);
+    flex-direction: column;
+    .center-item {
+      margin: 1px;
+      width: 100%;
+      height: 18%;
+      line-height: 73px;
+      @include flexBox(center);
+      // 中间四行
+      .left,
+      .right {
+        width: 50%;
+        height: 100%;
+        @include flexBox(center, center);
+        .text {
+          width: 25%;
+          height: 80%;
+          text-align: center;
+          line-height: 58px;
+          letter-spacing: 3px;
+          font-size: 16px;
+          color: rgb(56, 153, 222);
+        }
+        .reg-msg-write {
+          width: 60%;
+          height: 60%;
+          background-color: rgba(255, 255, 255, 0.1);
+          padding-left: 5px;
+          border: none;
+          border-bottom: 1px solid rgba(103, 192, 255, 0.6);
+          text-align: center;
+          @include flexBox(center, center); 
+        }
+        //   输入框样式设置
+        .ant-input:focus {
+          border-color: #ffffff;
+          box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.01);
+          border-right-width: 0px;
+          border-bottom: 1px solid rgba(103, 192, 255, 0.6);
+        }
+        // 多选框样式
+        .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+          background-color: rgba(255, 255, 255, 0.2);
+          border: 0px solid #d9d9d9;
+          box-shadow: none;
+        }
+      }
+      // 注册按钮
+      .reg-button-center {
+        width: 30%;
+        height: 60%;
+        letter-spacing: 3px;
+        font-size: 16px;
+        margin-top: 18px;
+      }
+    }
+  }
+}
