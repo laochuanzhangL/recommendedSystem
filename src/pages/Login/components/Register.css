@@ -1,0 +1,84 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Courier New", Courier, monospace;
+}
+.Register {
+  width: calc(100vw);
+  height: calc(100vh);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Register .reg-center {
+  width: 950px;
+  height: 520px;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 6px;
+  border: 1px solid #98cdff;
+  box-shadow: 0px 0px 10px 10px rgba(210, 210, 210, 0.2);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+.Register .reg-center .center-item {
+  margin: 1px;
+  width: 100%;
+  height: 18%;
+  line-height: 73px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.Register .reg-center .center-item .left,
+.Register .reg-center .center-item .right {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Register .reg-center .center-item .left .text,
+.Register .reg-center .center-item .right .text {
+  width: 25%;
+  height: 80%;
+  text-align: center;
+  line-height: 58px;
+  letter-spacing: 3px;
+  font-size: 16px;
+  color: #3899de;
+}
+.Register .reg-center .center-item .left .reg-msg-write,
+.Register .reg-center .center-item .right .reg-msg-write {
+  width: 60%;
+  height: 60%;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding-left: 5px;
+  border: none;
+  border-bottom: 1px solid rgba(103, 192, 255, 0.6);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Register .reg-center .center-item .left .ant-input:focus,
+.Register .reg-center .center-item .right .ant-input:focus {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.01);
+  border-right-width: 0px;
+  border-bottom: 1px solid rgba(103, 192, 255, 0.6);
+}
+.Register .reg-center .center-item .left .ant-select:not(.ant-select-customize-input) .ant-select-selector,
+.Register .reg-center .center-item .right .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 0px solid #d9d9d9;
+  box-shadow: none;
+}
+.Register .reg-center .center-item .reg-button-center {
+  width: 30%;
+  height: 60%;
+  letter-spacing: 3px;
+  font-size: 16px;
+  margin-top: 18px;
+}

@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Form, Input, Radio, message, Select, Cascader } from "antd";
 
 import BG from "../../../utils/BG";
-import "./Register.scss";
+import "./Register.css";
 
 const { Option } = Select;
 

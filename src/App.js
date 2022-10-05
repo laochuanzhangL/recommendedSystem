@@ -3,8 +3,8 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import 'antd/dist/antd.min.css'
 // import './App.css'
 
-import Home from './pages/home'
-import Login from './pages/Login'
+import Home from './pages/Home'
+import Login from './pages/Login' 
 
 export default function App() {
   return (
