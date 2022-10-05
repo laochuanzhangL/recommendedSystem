@@ -62,6 +62,7 @@ td{
 Header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0 16px !important;
 }
 Header .head-left,
@@ -69,6 +70,14 @@ Header .head-right {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+Header .head-middle{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 35px;
+  box-shadow: 0 0 10px 0 rgb(0 33 79 / 11%);
 }
 Header .head-left span {
   padding: 2px;
@@ -101,60 +110,7 @@ Header .head-right .head-right-text .head-right-text-tittle {
   margin: 0 auto;
   position: relative;
 }
-.logo {
-  height: 37px;
-  margin: 16px;
-  line-height: 37px;
-  color: white;
-  background: rgb(111, 125, 140);
-  text-align: center;
-  font-family: "Arial Black", "Arial Normal", "Arial";
-  font-size: 20px;
-  font-weight: 600;
-  font-style: normal;
-  cursor: pointer;
-}
-.logo i {
-  display: inline-block;
-  vertical-align: top;
-  font-size: 28px !important;
-}
-.logo-top {
-  height: 37px;
-  overflow: hidden;
-}
-@keyframes logoOpen {
-  from {
-    visibility: visible;
-    height: 0;
-  }
-  to {
-    height: 550%;
-  }
-}
-@keyframes logoClose {
-  from {
-    height: 550%;
-  }
-  to {
-    height: 0;
-  }
-}
 
-.down-logo-open {
-  position: relative;
-  z-index: 999;
-  width: 100%;
-  background-color: rgb(111, 125, 140);
-  animation: logoOpen 0.8s forwards;
-}
-.down-logo-close {
-  position: relative;
-  z-index: 999;
-  width: 100%;
-  background-color: rgb(111, 125, 140);
-  animation: logoClose 0.8s forwards;
-}
 /* 主体公司 */
 .mainCompany{
   display: flex;
@@ -164,17 +120,20 @@ Header .head-right .head-right-text .head-right-text-tittle {
   text-align: center;
   align-items: center;
   justify-content: center;
-  background-color: rgb(228, 227, 227);
-  border: 1px solid rgb(186, 184, 184);
+  background-color: rgb(245, 243, 243);
+  border: 1px solid rgb(223, 221, 221);
   border-radius: 3px;
   cursor: pointer;
+  font-weight: 200;
 }
 .mainCompany-active{
-  border: 1px solid orange ;
-  color: orange;
+  border: 1px solid rgb(8, 208, 244) ;
+  color: rgb(8, 208, 244);
+  font-weight: 200;
 }
-.addMainCompany{
-  font-size: 32px;
+
+.iconfont{
+  font-size: 22px !important;
   cursor: pointer;
   opacity: 0.5;
 }

@@ -1,16 +1,44 @@
 {
-  "id": "3639350",
-  "name": "企业介绍",
+  "id": "3686437",
+  "name": "推荐系统",
   "font_family": "iconfont",
   "css_prefix_text": "icon-",
   "description": "",
   "glyphs": [
+    {
+      "icon_id": "1090",
+      "name": "图书",
+      "font_class": "tushu",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
     {
       "icon_id": "4604545",
       "name": "c1-货车",
       "font_class": "c-huoche",
       "unicode": "e62d",
       "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "5387708",
+      "name": "建筑",
+      "font_class": "jianzhu",
+      "unicode": "eb38",
+      "unicode_decimal": 60216
+    },
+    {
+      "icon_id": "14656442",
+      "name": "科技服务",
+      "font_class": "kejifuwu",
+      "unicode": "e73b",
+      "unicode_decimal": 59195
+    },
+    {
+      "icon_id": "12961541",
+      "name": "圆形加号",
+      "font_class": "icon-test",
+      "unicode": "e608",
+      "unicode_decimal": 58888
     }
   ]
 }
