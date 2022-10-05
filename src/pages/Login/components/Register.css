@@ -1,7 +1,6 @@
 * {
   padding: 0;
   margin: 0;
-  font-family: "Courier New", Courier, monospace;
 }
 .Register {
   width: calc(100vw);
@@ -9,6 +8,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: "Courier New", Courier, monospace;
+
 }
 .Register .reg-center {
   width: 950px;
