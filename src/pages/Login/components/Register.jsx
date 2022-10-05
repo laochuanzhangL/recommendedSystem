@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Form, Input, Radio, message, Select } from "antd";
+import React from "react";
+import { Button, Form, Input, Radio, message, Select, Cascader } from "antd";
 
 import BG from "../../../utils/BG";
 import "./Register.scss";
@@ -7,17 +7,78 @@ import "./Register.scss";
 const { Option } = Select;
 
 export function Register() {
+  const userStatus = ["在岗", "离职", "请假", "实习", "兼职", "停职留薪"];
+  const userPosition = [
+    {
+      value: "shichang",
+      label: "市场部",
+      children: [
+        {
+          value: "zongjian",
+          label: "市场总监",
+        },
+        {
+          value: "jingli",
+          label: "经理",
+        },
+        {
+          value: "zhuguan",
+          label: "主管",
+        },
+        {
+          value: "zhuanyuan",
+          label: "市场专员",
+        },
+      ],
+    },
+    {
+      value: "xiangmu",
+      label: "项目部",
+      children: [
+        {
+          value: "jingli",
+          label: "项目经理",
+        },
+        {
+          value: "jinglizhuli",
+          label: "项目经理助理",
+          children: [
+            { value: "caiwu", label: "财务" },
+            { value: "shuiwu", label: "税务" },
+            { value: "fawu", label: "法务" },
+          ],
+        },
+        {
+          value: "kuaiji",
+          label: "项目会计",
+        },
+      ],
+    },
+    {
+      value: "zongjingban",
+      label: "总经办",
+      children: [
+        {
+          value: "zongjingli",
+          label: "总经理",
+        },
+        {
+          value: "mishu",
+          label: "经理秘书",
+        },
+        {
+          value: "zhuli",
+          label: "经理助理",
+        },
+      ],
+    },
+  ];
   // 提交表单后正确和错误的信息
   const onFinish = (values) => {
     console.log(values);
   };
   const onFinishFailed = (errorInfo) => {
     message.error(errorInfo.errorFields[0].errors[0]);
-  };
-
-  // 下拉框
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
   };
 
   return (
@@ -30,11 +91,13 @@ export function Register() {
         autoComplete="off"
       >
         <div className="reg-center">
+          {/* 标题 */}
           <div className="center-item">
             <span style={{ textAlign: "center", fontSize: "30px" }}>
-              优 化 服 务 评 估 系 统
+            财 税 服 务 评 估 系 统
             </span>
           </div>
+
           {/* 中间注册信息 */}
           {/* 工号&密码 */}
           <div className="center-item">
@@ -47,7 +110,7 @@ export function Register() {
                 noStyle
                 rules={[{ required: true, message: "请输入您的工号!" }]}
               >
-                <Input className="reg-msg-write" />
+                <Input className="reg-msg-write" placeholder="请输入您的工号" />
               </Form.Item>
             </div>
             <div className="right">
@@ -59,7 +122,11 @@ export function Register() {
                 noStyle
                 rules={[{ required: true, message: "请输入您的密码!" }]}
               >
-                <Input className="reg-msg-write" />
+                <Input
+                  className="reg-msg-write"
+                  placeholder="请输入您的密码"
+                  type="password"
+                />
               </Form.Item>
             </div>
           </div>
@@ -91,22 +158,31 @@ export function Register() {
               <div className="text">
                 <span style={{ color: "red" }}>*</span>所属部门:
               </div>
-              {/* <div className="reg-msg-write"> */}
-                <Select
-                  defaultValue="市场部"
-                  className="reg-msg-write"
-                >
-                  <Option value="shichang">市场部</Option>
-                  <Option value="xiangmu">项目部</Option>
-                  <Option value="zongjingban">总经办</Option>
-                </Select>
-              {/* </div> */}
+              <Select defaultValue="市场部" className="reg-msg-write">
+                <Option value="shichang" disabled>
+                  市场部
+                </Option>
+                <Option value="xiangmu" disabled>
+                  项目部
+                </Option>
+                <Option value="zongjingban" disabled>
+                  总经办
+                </Option>
+              </Select>
             </div>
             <div className="right">
               <div className="text">
                 <span style={{ color: "red" }}>*</span>员工状态:
               </div>
-              <div className="reg-msg-write"></div>
+              <Select defaultValue="在岗" className="reg-msg-write">
+                {userStatus.map((item) => {
+                  return (
+                    <Option value={`${item}`} key={`${item}`} disabled>
+                      {item}
+                    </Option>
+                  );
+                })}
+              </Select>
             </div>
           </div>
 
@@ -116,7 +192,11 @@ export function Register() {
               <div className="text">
                 <span style={{ color: "red" }}>*</span>职 位:
               </div>
-              <div className="reg-msg-write"></div>
+              <Cascader
+                options={userPosition}
+                placeholder="职 位"
+                className="reg-msg-write"
+              />
             </div>
             <div className="right"></div>
           </div>

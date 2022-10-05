@@ -92,7 +92,7 @@ export function User() {
   return (
     <Fragment>
       <div className="login-wrap">
-        <div className="login-top">优 化 服 务 评 估 系 统</div>
+        <div className="login-top">财 税 服 务 评 估 系 统</div>
         <Tabs
           className="login-select-form"
           defaultActiveKey="1"
@@ -100,7 +100,7 @@ export function User() {
           tabBarGutter={80}
           items={[
             {
-              label: ` 用 户 注 册 `,
+              label: ` 用 户 登 录 `,
               key: "1",
               children: <Login />,
               className: "login-select-form-content",
