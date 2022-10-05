@@ -1,24 +1,28 @@
-import React from "react";
-import { CaretLeftOutlined, CaretRightOutlined,PlusCircleOutlined } from "@ant-design/icons";
-import { useState, useEffect } from "react";
+import React,{ useState, useEffect } from "react";
+import {
+  CaretLeftOutlined,
+  CaretRightOutlined,
+} from "@ant-design/icons";
 import { Route, Switch, useHistory, Redirect } from "react-router-dom";
-import { Layout, Menu, Button, Space,Modal,Input,message  } from "antd";
+import { Layout, Menu, Button, Space, Modal, Input, message } from "antd";
 
 import Routes from "./routes";
+import IndustrySelect from "./components/IndustrySelect";
 
 import "./index.css";
 import "../../static/iconfont.css";
 
-export default function Home(){
+export default function Home() {
   const history = useHistory();
   const { Header, Sider, Content } = Layout;
   const [collapsed, setCollapsed] = useState(false);
-  const [isHidden, setIsHidden] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
   const [showTime, setShowTime] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [mainCompanies,setMainCompanies]=useState([{name:"主体公司1xxx",checked:true},{name:"主体公司2xxx",checked:false},{name:"主体公司3xxx",checked:false},])
-  const [isChecked,setIsChecked]=useState(false)
+  const [mainCompanies, setMainCompanies] = useState([
+    { name: "主体公司1xxx", checked: true },
+    { name: "主体公司2xxx", checked: false },
+    { name: "主体公司3xxx", checked: false },
+  ]);
 
   // 实时获取时间
   function formateDate(time) {
@@ -47,24 +51,14 @@ export default function Home(){
     }, 1000);
   }, []);
 
-  // logo点击动画
-  const logoOpen = () => {
-    setIsHidden(false);
-    setIsOpen(true);
-  };
-  const logoClose = function (e) {
-    e.stopPropagation();
-    setIsOpen(false);
-  };
-
   // 点击菜单函数
   const change = (e) => {
     history.push(`/home/${e.key}`);
   };
+
   // url
   const urlParams = new URL(window.location.href);
   const pathname = urlParams?.pathname;
-
 
   // 点击添加主体公司函数
   const showModal = () => {
@@ -79,34 +73,25 @@ export default function Home(){
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const addMainCompany=() => {
-    setMainCompanies("添加")
-  }
-    // 点击active
-  const itemClick=function(item,index){
-    mainCompanies.forEach(item=>{
-        item.checked = false;
-    })
+
+  const addMainCompany = () => {
+    setMainCompanies("添加");
+  };
+
+  // 点击active
+  const itemClick = function (item, index) {
+    mainCompanies.forEach((item) => {
+      item.checked = false;
+    });
     mainCompanies[index].checked = true;
-}
+  };
 
   return (
     <Layout className="homeBack">
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="logo" onClick={logoOpen}>
-          <div className="logo-top">
-            <i className="iconfont">&#xe62d;</i>
-            <span>&nbsp;物流运输行业</span>
-          </div>
-          <div
-            className={isOpen ? "down-logo-open" : "down-logo-close"}
-            onClick={logoClose}
-            hidden={isHidden}
-          ></div>
-        </div>
+        <IndustrySelect/>
         <Menu
           theme="dark"
-          // style={{ background: "rgb(31,42,61)" }}
           mode="inline"
           defaultSelectedKeys={["basic"]}
           onClick={change}
@@ -153,6 +138,7 @@ export default function Home(){
           }}
         >
           <div className="head-left">{showTime}</div>
+          <div className="head-middle">财税优化服务评估系统</div>
           <div className="head-right">
             <div className="head-right-img"></div>
             <div className="head-right-text">
@@ -163,21 +149,57 @@ export default function Home(){
           </div>
         </Header>
         <Space
-          style={{width:'99%',marginTop:'5px',justifyContent:"space-between",paddingLeft:"16px"}}>
-          <div  style={{display:pathname=='/home/basic'?"flex":"none"}} >
-            {
-              mainCompanies.map((item,index) => {
-                return <div className={item.checked?"mainCompany mainCompany-active":"mainCompany "} key={index} onClick={itemClick.bind(this,item,index)} >{item.name}</div>
-              })
-            }
-            <div onClick={showModal} ><PlusCircleOutlined className="addMainCompany"/></div>
-            <Modal title="请输入公司名字" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-            <Input placeholder="主题公司名字"/>
-             </Modal>
+          style={{
+            width: "99%",
+            marginTop: "5px",
+            justifyContent: "space-between",
+            paddingLeft: "16px",
+          }}
+        >
+          <div style={{ display: pathname == "/home/basic" ? "flex" : "none" }}>
+            {mainCompanies.map((item, index) => {
+              return (
+                <div
+                  className={
+                    item.checked
+                      ? "mainCompany mainCompany-active"
+                      : "mainCompany "
+                  }
+                  key={index}
+                  onClick={itemClick.bind(this, item, index)}
+                >
+                  {item.name}
+                </div>
+              );
+            })}
+            <div className="iconfont" onClick={showModal}>
+              &#xe608;
+            </div>
+            <Modal
+              title="请输入公司名字"
+              open={isModalOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+            >
+              <Input placeholder="主题公司名字" />
+            </Modal>
           </div>
           <div>
-          <Button className="saveBtn" type="primary" style={{borderRadius:'5px'}} size="middle">保存</Button>
-          <Button className="editBtn" style={{borderRadius:'5px'}} size="middle">修改</Button>
+            <Button
+              className="saveBtn"
+              type="primary"
+              style={{ borderRadius: "5px" }}
+              size="middle"
+            >
+              保存
+            </Button>
+            <Button
+              className="editBtn"
+              style={{ borderRadius: "5px" }}
+              size="middle"
+            >
+              修改
+            </Button>
           </div>
         </Space>
         <Content
@@ -197,4 +219,4 @@ export default function Home(){
       </Layout>
     </Layout>
   );
-};
+}

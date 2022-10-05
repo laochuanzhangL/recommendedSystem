@@ -44,19 +44,25 @@ export default function BasicInfoTable() {
           <td className="cbi-tb-info-td" colSpan={2}></td>
           <td className="cbi-title-td">是否对外投资</td>
           <td className="cbi-tb-info-td" colSpan={2}>
-            <input
-              type="radio"
-              name="isForeignInvest"
-              onClick={isForeignInvest}
-            />
-            有
-            <input
-              type="radio"
-              name="isForeignInvest"
-              defaultChecked
-              onClick={isNotForeignInvest}
-            />
-            无
+            <div className="foreign-invest-wrap">
+              <span style={{ position: "relative", left: -29 }}>
+                <input
+                  type="radio"
+                  name="isForeignInvest"
+                  onClick={isForeignInvest}
+                />
+                有
+              </span>
+              <span style={{ position: "relative", left: 29 }}>
+                <input
+                  type="radio"
+                  name="isForeignInvest"
+                  defaultChecked
+                  onClick={isNotForeignInvest}
+                />
+                无
+              </span>
+            </div>
           </td>
         </tr>
         <tr className="cbi-table-row">
@@ -80,7 +86,7 @@ export default function BasicInfoTable() {
             股东信息
           </td>
         </tr>
-        <tr className="cbi-table-row" >
+        <tr className="cbi-table-row">
           <td className="cbi-title-td">股东1</td>
           <td className="cbi-sh-info-td" colSpan={2}></td>
           <td className="cbi-title-td">持股比例</td>
@@ -111,25 +117,25 @@ export default function BasicInfoTable() {
               <td className="cbi-title-td">被投资企业1</td>
               <td className="cbi-fi-info-com-td"></td>
               <td className="cbi-title-td">投资比例</td>
-              <td className=""></td>
+              <td></td>
               <td className="cbi-title-td">主营项目</td>
-              <td ></td>
+              <td></td>
             </tr>
             <tr className="cbi-table-row">
               <td className="cbi-title-td">被投资企业2</td>
               <td className="cbi-fi-info-com-td"></td>
               <td className="cbi-title-td">投资比例</td>
-              <td ></td>
+              <td></td>
               <td className="cbi-title-td">主营项目</td>
-              <td ></td>
+              <td></td>
             </tr>
             <tr className="cbi-table-row">
               <td className="cbi-title-td">被投资企业3</td>
               <td className="cbi-fi-info-com-td"></td>
               <td className="cbi-title-td">投资比例</td>
-              <td ></td>
+              <td></td>
               <td className="cbi-title-td">主营项目</td>
-              <td ></td>
+              <td></td>
             </tr>
           </>
         ) : (
@@ -137,13 +143,12 @@ export default function BasicInfoTable() {
             <tr className="no-cbi-table-row">
               <td className="cbi-big-title" colSpan={6}></td>
             </tr>
-            <tr >
+            <tr>
               <td className="cbi-title-td"></td>
-              
+
               <td className="cbi-title-td"></td>
-              
+
               <td className="cbi-title-td"></td>
-              
             </tr>
             <tr className="no-cbi-table-row">
               <td className="cbi-title-td"></td>
@@ -172,25 +177,31 @@ export default function BasicInfoTable() {
         <tr className="cbi-table-row">
           <td className="cbi-title-td">纳税人资格</td>
           <td className="cbi-tax-info-td" colSpan={5}>
-            <Space>
+            <span style={{ position: "relative", left: -160 }}>
               <input name="qualificationOfTaxpayer" type="radio" />
               一般纳税人
+            </span>
+            <span style={{ position: "relative", left: -29 }}>
               <input name="qualificationOfTaxpayer" type="radio" />
               小规模纳税人
-            </Space>
+            </span>
           </td>
         </tr>
         <tr className="cbi-table-row">
           <td className="cbi-title-td">发票种类</td>
           <td className="cbi-tax-info-td" colSpan={5}>
-            <Space>
+            <span style={{ position: "relative", left: -200 }}>
               <input name="typeOfInvoice" type="radio" />
               专票
+            </span>
+            <span style={{ position: "relative", left: -77 }}>
               <input name="typeOfInvoice" type="radio" />
               普票
+            </span>
+            <span style={{ position: "relative", left: 16 }}>
               <input name="typeOfInvoice" type="radio" />
               专票+普票
-            </Space>
+            </span>
           </td>
         </tr>
         <tr className="cbi-table-row">
