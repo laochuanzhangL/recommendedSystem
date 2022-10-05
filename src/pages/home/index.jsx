@@ -85,6 +85,10 @@ export default function Home() {
     });
     mainCompanies[index].checked = true;
   };
+    // 保存成功函数
+    const Preservation=() => {
+      message.success("保存成功！",2.5)
+    }
 
   return (
     <Layout className="homeBack">
@@ -190,6 +194,7 @@ export default function Home() {
               type="primary"
               style={{ borderRadius: "5px" }}
               size="middle"
+              onClick={Preservation}
             >
               保存
             </Button>

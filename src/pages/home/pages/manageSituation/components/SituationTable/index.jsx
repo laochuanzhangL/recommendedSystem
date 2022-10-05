@@ -178,7 +178,7 @@ export default function SituationTable() {
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isWarehousingServices" />
                 一般纳税人 (
                 <NumDropdown
                   arr={number}
@@ -188,7 +188,7 @@ export default function SituationTable() {
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isWarehousingServices" />
                 小规模纳税人 (
                 <NumDropdown
                   arr={number}
@@ -198,7 +198,7 @@ export default function SituationTable() {
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isWarehousingServices" />
                 自然人 (
                 <NumDropdown
                   arr={number}
@@ -218,7 +218,7 @@ export default function SituationTable() {
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isVehicleSales" />
                 一般纳税人 (
                 <NumDropdown
                   arr={number}
@@ -228,7 +228,7 @@ export default function SituationTable() {
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isVehicleSales" />
                 小规模纳税人 (
                 <NumDropdown
                   arr={number}
@@ -238,7 +238,7 @@ export default function SituationTable() {
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isVehicleSales" />
                 自然人 (
                 <NumDropdown
                   arr={number}
@@ -258,7 +258,7 @@ export default function SituationTable() {
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isTransportationAgencyService" />
                 一般纳税人 (
                 <NumDropdown
                   arr={number}
@@ -268,7 +268,7 @@ export default function SituationTable() {
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isTransportationAgencyService" />
                 小规模纳税人 (
                 <NumDropdown
                   arr={number}
@@ -278,7 +278,7 @@ export default function SituationTable() {
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isTransportationAgencyService" />
                 自然人 (
                 <NumDropdown
                   arr={number}
@@ -298,7 +298,7 @@ export default function SituationTable() {
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isAffiliatedService" />
                 一般纳税人 (
                 <NumDropdown
                   arr={number}
@@ -308,7 +308,7 @@ export default function SituationTable() {
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isAffiliatedService" />
                 小规模纳税人 (
                 <NumDropdown
                   arr={number}
@@ -318,7 +318,7 @@ export default function SituationTable() {
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isAffiliatedService" />
                 自然人 (
                 <NumDropdown
                   arr={number}
@@ -360,7 +360,7 @@ export default function SituationTable() {
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isVehicleCost" />
                 一般纳税人 (
                 <TextDropdown
                   arr={carCostGeneral}
@@ -376,7 +376,7 @@ export default function SituationTable() {
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isVehicleCost" />
                 小规模纳税人 (
                 <TextDropdown
                   arr={carCostSmall}
@@ -392,7 +392,7 @@ export default function SituationTable() {
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isVehicleCost" />
                 自然人 (
                 <TextDropdown
                   arr={carCostNatural}
@@ -418,7 +418,7 @@ export default function SituationTable() {
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isLaborCost" />
                 一般纳税人 (
                 <TextDropdown
                   arr={LaborCostGeneral}
@@ -434,7 +434,7 @@ export default function SituationTable() {
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isLaborCost" />
                 小规模纳税人 (
                 <TextDropdown
                   arr={LaborCostSmall}
@@ -450,7 +450,7 @@ export default function SituationTable() {
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isLaborCost" />
                 自然人 (
                 <TextDropdown
                   arr={LaborCostNatural}
@@ -476,7 +476,7 @@ export default function SituationTable() {
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isOfficeCost" />
                 一般纳税人 (
                 <NumDropdown
                   arr={number}
@@ -486,7 +486,7 @@ export default function SituationTable() {
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isOfficeCost" />
                 小规模纳税人 (
                 <TextDropdown
                   arr={OfficeCostSmall}
@@ -502,7 +502,7 @@ export default function SituationTable() {
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isOfficeCost" />
                 自然人 (
                 <TextDropdown
                   arr={OfficeCostNatural}
@@ -528,7 +528,7 @@ export default function SituationTable() {
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isFuelCost" />
                 一般纳税人 (
                 <NumDropdown
                   arr={number}
@@ -548,7 +548,7 @@ export default function SituationTable() {
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input type="radio" name="isRoadCost" />
                 一般纳税人 (
                 <NumDropdown
                   arr={number}
