@@ -7,7 +7,7 @@ import "./Register.scss";
 const { Option } = Select;
 
 export function Register() {
-  const userStatus = ["在岗", "离职", "请假", "实习", "兼职", "停职留薪"];
+  const userStatus = ["在岗", "离职", "请假", "实习", "兼职", "停薪留职"];
   const userPosition = [
     {
       value: "shichang",
