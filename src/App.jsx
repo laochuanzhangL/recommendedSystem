@@ -12,7 +12,7 @@ export default function App() {
           {Routes.map((item) => (
             <Route path={item.path} component={item.component} />
           ))}
-          <Redirect to="/login" />
+          <Redirect to="/login/login" />
         </Switch>
       </BrowserRouter>
     </div>

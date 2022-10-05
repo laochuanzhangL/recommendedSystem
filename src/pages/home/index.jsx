@@ -89,7 +89,7 @@ export default function Home() {
   return (
     <Layout className="homeBack">
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <IndustrySelect/>
+        <IndustrySelect />
         <Menu
           theme="dark"
           mode="inline"
@@ -138,7 +138,7 @@ export default function Home() {
           }}
         >
           <div className="head-left">{showTime}</div>
-          <div className="head-middle">财税优化服务评估系统</div>
+          <div className="head-middle">财税服务评估系统</div>
           <div className="head-right">
             <div className="head-right-img"></div>
             <div className="head-right-text">

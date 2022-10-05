@@ -1,8 +1,9 @@
 import React from "react";
 import { useState } from "react";
-import { Button, Space } from "antd";
+import { Button, Space,Modal } from "antd";
 
 export default function BasicInfoTable() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [foreignInvest, setForeignInvest] = useState(false);
 
   // 判断是否对外投资展示不一样的表格内容
@@ -12,6 +13,19 @@ export default function BasicInfoTable() {
   function isNotForeignInvest() {
     setForeignInvest(false);
   }
+
+  // 点击删除主体公司出现对话框
+  const showDeleteModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <>
@@ -77,6 +91,8 @@ export default function BasicInfoTable() {
               挂靠服务
               <input type="checkbox" />
               经纪代理服务
+              <input type="checkbox" />
+              车辆销售
             </Space>
           </td>
         </tr>
@@ -210,9 +226,35 @@ export default function BasicInfoTable() {
         </tr>
         <tr className="cbi-table-row">
           <td colSpan={6}>
-            <Button style={{ borderRadius: "10px" }}>
-              其他主体公司信息填写
-            </Button>
+            <Space>
+              <Button
+                type="primary"
+                style={{ borderRadius: "10px", height: "30px" }}
+              >
+                添加主体公司
+              </Button>
+              <Button
+                onClick={showDeleteModal}
+                type="primary"
+                danger
+                style={{ borderRadius: "10px", height: "30px" }}
+              >
+                删除主体公司
+              </Button>
+              <Modal
+                centered={true}
+                className="evaluation-results"
+                closable={false}
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                title='进行删除操作'
+                okText={"确认"}
+                cancelText={"取消"}
+              >
+                您确定删除该主体公司吗?
+              </Modal>
+            </Space>
           </td>
         </tr>
       </table>

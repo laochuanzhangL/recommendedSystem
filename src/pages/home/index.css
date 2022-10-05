@@ -71,6 +71,9 @@ Header .head-right {
   align-items: center;
   justify-content: center;
 }
+Header .head-left{
+  width: 150px;
+}
 Header .head-middle{
   display: flex;
   align-items: center;
