@@ -1,17 +1,17 @@
-.logo {
+.logo-wrap {
   height: 37px;
   margin: 16px;
   line-height: 37px;
   color: white;
   background: rgb(111, 125, 140);
-  text-align: center;
+  text-align: start;
   font-family: "Arial Black", "Arial Normal", "Arial";
   font-size: 20px;
   font-weight: 600;
   font-style: normal;
   cursor: pointer;
 }
-.logo i {
+.logo-wrap i {
   display: inline-block;
   vertical-align: top;
   font-size: 28px !important;
@@ -28,12 +28,12 @@
     height: 0;
   }
   to {
-    height: 318%;
+    height: 320%;
   }
 }
 @keyframes logoClose {
   from {
-    height: 318%;
+    height: 320%;
   }
   to {
     height: 0;
@@ -50,13 +50,16 @@
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-.down-logo-open div {
+/* .down-logo-open div {
   border-bottom: 1px solid rgb(183, 190, 197);
-}
+} */
 .down-logo-close {
   position: relative;
   z-index: 999;
   width: 100%;
+  text-align: start;
   background-color: rgb(111, 125, 140);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
   animation: logoClose 0.8s forwards;
 }
