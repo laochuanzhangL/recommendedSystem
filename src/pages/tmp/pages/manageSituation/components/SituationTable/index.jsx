@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Button, Modal, Space, Slider, Select, Table } from "antd";
+import { Button, Modal, Space, Slider, Select, Table,message } from "antd";
 
 import NumDropdown from "../NumDropdown";
 import TextDropdown from "../TextDropdown";
@@ -92,6 +92,10 @@ export default function SituationTable() {
     },
   ];
 
+  // 提交数据函数
+  const commit=() => {
+    message.success("提交成功！",2.5)
+  }
   return (
     <div>
       <table>
@@ -587,7 +591,7 @@ export default function SituationTable() {
         <tr className="ms-table-row">
           <td colSpan={5}>
             <Space>
-              <Button type="primary">提交数据</Button>
+              <Button type="primary" onClick={commit} >提交数据</Button>
               <Button onClick={showModal}>查看结果</Button>
               <Modal
                 centered={true}
