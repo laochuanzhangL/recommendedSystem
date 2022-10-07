@@ -1,5 +1,79 @@
 {
-    "name": "jiejie",
-    "gender": ["男", "女"],
-    "deparment": ""
+  "Name": "jiejie",
+  "Deparment": ["市场部", "项目部", "总经办"],
+  "Status": ["在岗", "离职", "请假", "实习", "兼职", "停薪留职"],
+  "Position": [
+    {
+      "value": "shichang",
+      "label": "市场部",
+      "children": [
+        {
+          "value": "zongjian",
+          "label": "市场总监",
+          "disabled": true
+        },
+        {
+          "value": "jingli",
+          "label": "经理",
+          "disabled": true
+        },
+        {
+          "value": "zhuguan",
+          "label": "主管",
+          "disabled": true
+        },
+        {
+          "value": "zhuanyuan",
+          "label": "市场专员",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "value": "xiangmu",
+      "label": "项目部",
+      "children": [
+        {
+          "value": "jingli",
+          "label": "项目经理",
+          "disabled": true
+        },
+        {
+          "value": "jinglizhuli",
+          "label": "项目经理助理",
+          "children": [
+            { "value": "caiwu", "label": "财务", "disabled": true },
+            { "value": "shuiwu", "label": "税务", "disabled": true },
+            { "value": "fawu", "label": "法务", "disabled": true }
+          ]
+        },
+        {
+          "value": "kuaiji",
+          "label": "项目会计",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "value": "zongjingban",
+      "label": "总经办",
+      "children": [
+        {
+          "value": "zongjingli",
+          "label": "总经理",
+          "disabled": true
+        },
+        {
+          "value": "mishu",
+          "label": "经理秘书",
+          "disabled": true
+        },
+        {
+          "value": "zhuli",
+          "label": "经理助理",
+          "disabled": true
+        }
+      ]
+    }
+  ]
 }

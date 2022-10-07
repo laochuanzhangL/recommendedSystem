@@ -1,7 +1,6 @@
 * {
   padding: 0;
   margin: 0;
-  font-family: "Courier New", Courier, monospace;
 }
 
 // 用于设置flex布局
@@ -14,6 +13,7 @@
 .Register {
   width: calc(100vw);
   height: calc(100vh);
+  font-family: "Courier New", Courier, monospace;
   .flexBox(center, center);
   .reg-center {
     width: 950px;
@@ -55,13 +55,28 @@
           text-align: center;
           .flexBox(center, center);
         }
-        //   输入框样式设置
+
+        //   输入文本框样式设置
         .ant-input:focus {
-          border-color: #ffffff;
           box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.01);
-          border-right-width: 0px;
-          border-bottom: 1px solid rgba(103, 192, 255, 0.6);
         }
+        // 设置密码输入框样式
+        #basic_password  {
+          text-align: center;
+          padding-left: 15px;
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+        #basic_password:hover,
+        #basic_password:focus {
+          border: none;
+          box-shadow: none;
+          padding-left: 15px;
+        }
+        // 设置密码输入框聚焦时无边框
+        .ant-input-affix-wrapper-focused {
+          box-shadow: none;
+        }
+
         // 多选框样式
         .ant-select:not(.ant-select-customize-input) .ant-select-selector {
           background-color: rgba(255, 255, 255, 0.2);
@@ -71,11 +86,12 @@
       }
       // 注册按钮
       .reg-button-center {
-        width: 30%;
-        height: 60%;
+        width: 35%;
+        height: 55%;
         letter-spacing: 3px;
         font-size: 16px;
         margin-top: 18px;
+        border-radius: 4px;
       }
     }
   }

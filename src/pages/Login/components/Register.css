@@ -5,11 +5,10 @@
 .Register {
   width: calc(100vw);
   height: calc(100vh);
+  font-family: "Courier New", Courier, monospace;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Courier New", Courier, monospace;
-
 }
 .Register .reg-center {
   width: 950px;
@@ -65,10 +64,25 @@
 }
 .Register .reg-center .center-item .left .ant-input:focus,
 .Register .reg-center .center-item .right .ant-input:focus {
-  border-color: #ffffff;
   box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.01);
-  border-right-width: 0px;
-  border-bottom: 1px solid rgba(103, 192, 255, 0.6);
+}
+.Register .reg-center .center-item .left #basic_password,
+.Register .reg-center .center-item .right #basic_password {
+  text-align: center;
+  padding-left: 15px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.Register .reg-center .center-item .left #basic_password:hover,
+.Register .reg-center .center-item .right #basic_password:hover,
+.Register .reg-center .center-item .left #basic_password:focus,
+.Register .reg-center .center-item .right #basic_password:focus {
+  border: none;
+  box-shadow: none;
+  padding-left: 15px;
+}
+.Register .reg-center .center-item .left .ant-input-affix-wrapper-focused,
+.Register .reg-center .center-item .right .ant-input-affix-wrapper-focused {
+  box-shadow: none;
 }
 .Register .reg-center .center-item .left .ant-select:not(.ant-select-customize-input) .ant-select-selector,
 .Register .reg-center .center-item .right .ant-select:not(.ant-select-customize-input) .ant-select-selector {
@@ -77,9 +91,10 @@
   box-shadow: none;
 }
 .Register .reg-center .center-item .reg-button-center {
-  width: 30%;
-  height: 60%;
+  width: 35%;
+  height: 55%;
   letter-spacing: 3px;
   font-size: 16px;
   margin-top: 18px;
+  border-radius: 4px;
 }

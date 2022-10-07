@@ -1,84 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Form, Input, Radio, message, Select, Cascader } from "antd";
+// 测试接口数据
+import axios from "axios";
 
+import LoginMsg from "../../../static/loginForRegister.json";
 import BG from "../../../utils/BG";
 import "./Register.css";
 
 const { Option } = Select;
 
 export function Register() {
-  const userStatus = ["在岗", "离职", "请假", "实习", "兼职", "停薪留职"];
-  const userPosition = [
-    {
-      value: "shichang",
-      label: "市场部",
-      children: [
-        {
-          value: "zongjian",
-          label: "市场总监",
-        },
-        {
-          value: "jingli",
-          label: "经理",
-        },
-        {
-          value: "zhuguan",
-          label: "主管",
-        },
-        {
-          value: "zhuanyuan",
-          label: "市场专员",
-        },
-      ],
-    },
-    {
-      value: "xiangmu",
-      label: "项目部",
-      children: [
-        {
-          value: "jingli",
-          label: "项目经理",
-        },
-        {
-          value: "jinglizhuli",
-          label: "项目经理助理",
-          children: [
-            { value: "caiwu", label: "财务" },
-            { value: "shuiwu", label: "税务" },
-            { value: "fawu", label: "法务" },
-          ],
-        },
-        {
-          value: "kuaiji",
-          label: "项目会计",
-        },
-      ],
-    },
-    {
-      value: "zongjingban",
-      label: "总经办",
-      children: [
-        {
-          value: "zongjingli",
-          label: "总经理",
-        },
-        {
-          value: "mishu",
-          label: "经理秘书",
-        },
-        {
-          value: "zhuli",
-          label: "经理助理",
-        },
-      ],
-    },
-  ];
+  const { Name } = LoginMsg;
+  const { Status } = LoginMsg;
+  const { Deparment } = LoginMsg;
+  const { Position } = LoginMsg;
+  const [userMsg, setUserMsg] = useState({});
   // 提交表单后正确和错误的信息
   const onFinish = (values) => {
+    const { rePassword } = values;
+    delete values.rePassword;
+    if (rePassword !== values.password) {
+      message.error("两次密码输入不相同，请重新输入！");
+      return;
+    }
     console.log(values);
   };
   const onFinishFailed = (errorInfo) => {
     message.error(errorInfo.errorFields[0].errors[0]);
+  };
+
+  // 填写完工号后获取员工信息
+  const getUserMsg = (data) => {
+    const value = data.target.value;
+    if (!value) {
+      message.warn("您似乎还没有输入工号哦~");
+      return;
+    }
+    axios
+      .get(
+        "https://www.fastmock.site/mock/8b2962f568e930a3d394e505c2edc00d/getUserMsgTest/user"
+      )
+      .then((res) => {
+        console.log(res.data);
+        setUserMsg({ ...res.data });
+      });
   };
 
   return (
@@ -94,12 +59,12 @@ export function Register() {
           {/* 标题 */}
           <div className="center-item">
             <span style={{ textAlign: "center", fontSize: "30px" }}>
-            财 税 服 务 评 估 系 统
+              财 税 服 务 评 估 系 统
             </span>
           </div>
 
           {/* 中间注册信息 */}
-          {/* 工号&密码 */}
+          {/* 工号&姓名 */}
           <div className="center-item">
             <div className="left">
               <div className="text">
@@ -110,72 +75,84 @@ export function Register() {
                 noStyle
                 rules={[{ required: true, message: "请输入您的工号!" }]}
               >
-                <Input className="reg-msg-write" placeholder="请输入您的工号" />
+                <Input
+                  className="reg-msg-write"
+                  placeholder="请输入您的工号"
+                  maxLength={12}
+                  onBlur={getUserMsg}
+                />
               </Form.Item>
             </div>
             <div className="right">
+              <div className="text">
+                <span style={{ color: "red" }}>*</span>姓 名:
+              </div>
+              <div className="reg-msg-write">
+                {userMsg.name ? userMsg.name : Name}
+              </div>
+            </div>
+          </div>
+
+          {/* 登录密码&性别 */}
+          <div className="center-item">
+            <div className="left">
               <div className="text">
                 <span style={{ color: "red" }}>*</span>登录密码:
               </div>
               <Form.Item
                 name="password"
                 noStyle
-                rules={[{ required: true, message: "请输入您的密码!" }]}
+                rules={[{ required: true, message: "密码不能为空!" }]}
               >
-                <Input
+                <Input.Password
                   className="reg-msg-write"
                   placeholder="请输入您的密码"
-                  type="password"
                 />
               </Form.Item>
-            </div>
-          </div>
-
-          {/* 姓名&性别 */}
-          <div className="center-item">
-            <div className="left">
-              <div className="text">
-                <span style={{ color: "red" }}>*</span>姓 名:
-              </div>
-              <div className="reg-msg-write">jiejie</div>
             </div>
             <div className="right">
               <div className="text">
                 <span style={{ color: "red" }}>*</span>性 别:
               </div>
               <div className="reg-msg-write" style={{ borderBottom: "none" }}>
-                <Radio defaultChecked={true} disabled>
+                <Radio checked={userMsg.gender === "mail"} disabled>
                   男
                 </Radio>
-                <Radio disabled>女</Radio>
+                <Radio checked={userMsg.gender === "femail"} disabled>
+                  女
+                </Radio>
               </div>
             </div>
           </div>
 
-          {/* 所属部门&员工状态 */}
+          {/* 确认密码&员工状态 */}
           <div className="center-item">
             <div className="left">
               <div className="text">
-                <span style={{ color: "red" }}>*</span>所属部门:
+                <span style={{ color: "red" }}>*</span>确认密码:
               </div>
-              <Select defaultValue="市场部" className="reg-msg-write">
-                <Option value="shichang" disabled>
-                  市场部
-                </Option>
-                <Option value="xiangmu" disabled>
-                  项目部
-                </Option>
-                <Option value="zongjingban" disabled>
-                  总经办
-                </Option>
-              </Select>
+              <Form.Item
+                name="rePassword"
+                noStyle
+                rules={[{ required: true, message: "请再次确认您的密码!" }]}
+              >
+                <Input
+                  className="reg-msg-write"
+                  placeholder="请确认您的密码"
+                  type="password"
+                />
+              </Form.Item>
             </div>
             <div className="right">
               <div className="text">
                 <span style={{ color: "red" }}>*</span>员工状态:
               </div>
-              <Select defaultValue="在岗" className="reg-msg-write">
-                {userStatus.map((item) => {
+              <Select
+                defaultValue={"在岗"}
+                value={userMsg.status}
+                className="reg-msg-write"
+              >
+                {Status.map((item) => {
                   return (
                     <Option value={`${item}`} key={`${item}`} disabled>
                       {item}
@@ -186,19 +163,38 @@ export function Register() {
             </div>
           </div>
 
-          {/* 职位 */}
+          {/* 所属部门&职位 */}
           <div className="center-item">
             <div className="left">
+              <div className="text">
+                <span style={{ color: "red" }}>*</span>所属部门:
+              </div>
+              <Select
+                defaultValue={"市场部"}
+                value={userMsg.deparment}
+                className="reg-msg-write"
+              >
+                {Deparment.map((item) => {
+                  return (
+                    <Option key={`${item}`} value={`${item}`} disabled>
+                      {item}
+                    </Option>
+                  );
+                })}
+              </Select>
+            </div>
+            <div className="right">
               <div className="text">
                 <span style={{ color: "red" }}>*</span>职 位:
               </div>
               <Cascader
-                options={userPosition}
-                placeholder="职 位"
+                options={Position}
+                defaultValue="市场部 市场总监"
+                value={userMsg.position}
                 className="reg-msg-write"
+                allowClear={false}
               />
             </div>
-            <div className="right"></div>
           </div>
 
           {/* 注册按钮 */}
