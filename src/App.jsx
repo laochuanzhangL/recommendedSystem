@@ -16,7 +16,7 @@ export default function App() {
               key={`${item.component}`}
             />
           ))}
-          <Redirect to="/login" />
+          <Redirect to="/login/login" />
         </Switch>
       </BrowserRouter>
     </div>

@@ -85,11 +85,15 @@ export default function Home() {
     });
     mainCompanies[index].checked = true;
   };
+    // 保存成功函数
+    const Preservation=() => {
+      message.success("保存成功！",2.5)
+    }
 
   return (
     <Layout className="homeBack">
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <IndustrySelect/>
+        <IndustrySelect />
         <Menu
           theme="dark"
           mode="inline"
@@ -138,7 +142,7 @@ export default function Home() {
           }}
         >
           <div className="head-left">{showTime}</div>
-          <div className="head-middle">财税优化服务评估系统</div>
+          <div className="head-middle">财税服务评估系统</div>
           <div className="head-right">
             <div className="head-right-img"></div>
             <div className="head-right-text">
@@ -190,6 +194,7 @@ export default function Home() {
               type="primary"
               style={{ borderRadius: "5px" }}
               size="middle"
+              onClick={Preservation}
             >
               保存
             </Button>
