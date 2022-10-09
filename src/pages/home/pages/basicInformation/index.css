@@ -23,6 +23,18 @@
    width: 446px;
 }
 
+/* 工商信息边框样式 */
+/* .cbi-tb-passive-input{
+    border-style: none;
+}
+
+.cbi-tb-active-input{
+
+} */
+.cbi-tb-input{
+    border-style: none;
+}
+
 /* 股东信息 */
 .cbi-sh-info-td{
     width: 446px;

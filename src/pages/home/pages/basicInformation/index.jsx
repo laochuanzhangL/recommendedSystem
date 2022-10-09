@@ -5,7 +5,7 @@ import './index.css'
 export default function Basic() {
   return (
     <div>
-      <BasicInfoTable/>
+      <BasicInfoTable />
     </div>
   );
 }

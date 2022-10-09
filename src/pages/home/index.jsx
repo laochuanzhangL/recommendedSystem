@@ -1,9 +1,6 @@
-import React,{ useState, useEffect } from "react";
-import {
-  CaretLeftOutlined,
-  CaretRightOutlined,
-} from "@ant-design/icons";
-import { Route, Switch, useHistory, Redirect } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { CaretLeftOutlined, CaretRightOutlined } from "@ant-design/icons";
+import { Route, Switch, Redirect, Link } from "react-router-dom";
 import { Layout, Menu, Button, Space, Modal, Input, message } from "antd";
 
 import Routes from "./routes";
@@ -13,7 +10,6 @@ import "./index.css";
 import "../../static/iconfont.css";
 
 export default function Home() {
-  const history = useHistory();
   const { Header, Sider, Content } = Layout;
   const [collapsed, setCollapsed] = useState(false);
   const [showTime, setShowTime] = useState("");
@@ -23,7 +19,13 @@ export default function Home() {
     { name: "主体公司2xxx", checked: false },
     { name: "主体公司3xxx", checked: false },
   ]);
+  const [edit, setEdit] = useState({
+    basicEdit: false,
+    manageEdit: false,
+  });
 
+  // 各表格的修改状态
+  const { basicEdit } = edit;
   // 实时获取时间
   function formateDate(time) {
     if (!time) return "";
@@ -51,14 +53,9 @@ export default function Home() {
     }, 1000);
   }, []);
 
-  // 点击菜单函数
-  const change = (e) => {
-    history.push(`/home/${e.key}`);
-  };
-
   // url
   const urlParams = new URL(window.location.href);
-  const pathname = urlParams?.pathname;
+  const pathname = urlParams.pathname;
 
   // 点击添加主体公司函数
   const showModal = () => {
@@ -90,42 +87,31 @@ export default function Home() {
     <Layout className="homeBack">
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <IndustrySelect />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["basic"]}
-          onClick={change}
-          items={[
-            {
-              key: "basic",
-              label: "企业基本信息",
-            },
-            {
-              key: "manage",
-              label: "企业经营情况",
-            },
-            {
-              key: "relevant",
-              label: "企业相关问题",
-            },
-            {
-              key: "solve",
-              label: "解决方案及成本",
-            },
-            {
-              key: "success",
-              label: "成功案例",
-            },
-            {
-              key: "detail",
-              label: "详细介绍",
-            },
-            {
-              key: "sign",
-              label: "合同签订",
-            },
-          ]}
-        />
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
+          <Menu.Item key="1" title="企业基本信息">
+            <Link to="/home/basic">
+              企业基本信息
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="2" title="企业经营情况">
+            <Link to="/home/manage">企业经营情况</Link>
+          </Menu.Item>
+          <Menu.Item key="3" title="企业相关问题">
+            <Link to="/home/relevant">企业相关问题</Link>
+          </Menu.Item>
+          <Menu.Item key="4" title="解决方案及成本">
+            <Link to="/home/solve">解决方案及成本</Link>
+          </Menu.Item>
+          <Menu.Item key="5" title="成功案例">
+            <Link to="/home/success">成功案例</Link>
+          </Menu.Item>
+          <Menu.Item key="6" title="详细介绍">
+            <Link to="/home/detail">详细介绍</Link>
+          </Menu.Item>
+          <Menu.Item key="7" title="合同签订">
+            <Link to="/home/sign">合同签订</Link>
+          </Menu.Item>
+        </Menu>
         <div className="trigger" onClick={() => setCollapsed(!collapsed)}>
           {collapsed ? <CaretRightOutlined /> : <CaretLeftOutlined />}
         </div>
@@ -197,6 +183,13 @@ export default function Home() {
               className="editBtn"
               style={{ borderRadius: "5px" }}
               size="middle"
+              onClick={() => {
+                if (pathname === "/home/basic") {
+                  setEdit({
+                    basicEdit: true
+                  })
+                }
+              }}
             >
               修改
             </Button>
