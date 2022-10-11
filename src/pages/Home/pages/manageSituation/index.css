@@ -20,22 +20,22 @@
 
 /* 企业经营情况表格里的内容单元格 */
 /* 收入相关 */
-.ms-ic-info-td{
+.ms-ic-info-td {
   width: 55px;
 }
 
 /* 支出相关 */
-.ms-ex-info-td{
+.ms-ex-info-td {
   width: 55px;
 }
 
 /* 人工相关 */
-.ms-ar-info-td{
+.ms-ar-info-td {
   width: 110px;
 }
 
 /* 资质单元格 */
-.ms-qua-info-td{
+.ms-qua-info-td {
   width: 220px;
 }
 

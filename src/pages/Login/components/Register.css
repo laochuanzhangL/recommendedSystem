@@ -9,7 +9,6 @@
   justify-content: center;
   align-items: center;
   font-family: "Courier New", Courier, monospace;
-
 }
 .Register .reg-center {
   width: 950px;
@@ -70,8 +69,18 @@
   border-right-width: 0px;
   border-bottom: 1px solid rgba(103, 192, 255, 0.6);
 }
-.Register .reg-center .center-item .left .ant-select:not(.ant-select-customize-input) .ant-select-selector,
-.Register .reg-center .center-item .right .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+.Register
+  .reg-center
+  .center-item
+  .left
+  .ant-select:not(.ant-select-customize-input)
+  .ant-select-selector,
+.Register
+  .reg-center
+  .center-item
+  .right
+  .ant-select:not(.ant-select-customize-input)
+  .ant-select-selector {
   background-color: rgba(255, 255, 255, 0.2);
   border: 0px solid #d9d9d9;
   box-shadow: none;

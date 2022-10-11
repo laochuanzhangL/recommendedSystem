@@ -2,7 +2,7 @@ import React from "react";
 import { Select } from "antd";
 
 export default function NumDropdown(props) {
-    const {arr,defaultValue,popupClassName}=props
+  const { arr, defaultValue, popupClassName } = props;
   const { Option } = Select;
   return (
     <Select

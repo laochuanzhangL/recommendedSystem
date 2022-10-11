@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Button, Space,Modal,message  } from "antd";
+import { Button, Space, Modal, message } from "antd";
 
 export default function BasicInfoTable() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,7 +26,6 @@ export default function BasicInfoTable() {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
 
   return (
     <>
@@ -228,9 +227,9 @@ export default function BasicInfoTable() {
         <tr className="cbi-table-row">
           <td colSpan={6}>
             <Space
-            style={{
-              margin:"10px 0 10px 0"
-            }}
+              style={{
+                margin: "10px 0 10px 0",
+              }}
             >
               <Button
                 type="primary"
@@ -252,17 +251,21 @@ export default function BasicInfoTable() {
                 open={isModalOpen}
                 // onOk={handleOk}
                 onCancel={handleCancel}
-                title='操作'
+                title="操作"
                 okText={"确认"}
                 cancelText={"取消"}
                 footer={
                   <div>
-                    <Button type="primary" onClick={handleCancel}>取消</Button>
-                    <Button type="primary" danger onClick={handleOk} >确认</Button>
+                    <Button type="primary" onClick={handleCancel}>
+                      取消
+                    </Button>
+                    <Button type="primary" danger onClick={handleOk}>
+                      确认
+                    </Button>
                   </div>
                 }
               >
-              <span>是否确认需要删除本主体公司？</span>
+                <span>是否确认需要删除本主体公司？</span>
               </Modal>
             </Space>
           </td>

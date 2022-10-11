@@ -1,11 +1,11 @@
 import React from "react";
 import BasicInfoTable from "./components/BasicInfoTable";
-import './index.css'
+import "./index.css";
 
 export default function Basic() {
   return (
     <div>
-      <BasicInfoTable/>
+      <BasicInfoTable />
     </div>
   );
 }
