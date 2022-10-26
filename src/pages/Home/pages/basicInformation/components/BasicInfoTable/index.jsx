@@ -1,10 +1,16 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Button, Space, Modal, message } from "antd";
 
+
 export default function BasicInfoTable() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [foreignInvest, setForeignInvest] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [foreignInvest, setForeignInvest] = useState(false)
+
+  // 订阅表格修改
+  useEffect(()=>{
+    
+  },[])
 
   // 判断是否对外投资展示不一样的表格内容
   function isForeignInvest() {
@@ -43,7 +49,9 @@ export default function BasicInfoTable() {
         </tr>
         <tr className="cbi-table-row">
           <td className="cbi-title-td">企业名称</td>
-          <td className="cbi-tb-info-td" colSpan={2}></td>
+          <td className="cbi-tb-info-td" colSpan={2}>
+            <input disabled type="text" name="companyName" className="cbi-tb-input"></input>
+          </td>
           <td className="cbi-title-td">纳税人识别号</td>
           <td className="cbi-tb-info-td" colSpan={2}></td>
         </tr>
