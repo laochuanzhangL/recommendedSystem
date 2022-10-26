@@ -1,12 +1,14 @@
 import React from "react";
 import { Button, Form, Input, Radio, message, Select, Cascader } from "antd";
+import httpUtil from "../../../utils/httpUtil";
 
 import BG from "../../../utils/BG";
 import "./Register.css";
 
 const { Option } = Select;
 
-export function Register() {
+export function Register(props) {
+  const {history} = props
   const userStatus = ["在岗", "离职", "请假", "实习", "兼职", "停薪留职"];
   const userPosition = [
     {
@@ -76,6 +78,19 @@ export function Register() {
   // 提交表单后正确和错误的信息
   const onFinish = (values) => {
     console.log(values);
+    const params={
+      code: "",
+      mobile: "",
+      password: values.password,
+      uid: values.userId
+    }
+    httpUtil.register(params)
+    .then((res)=>{
+      if(res.code==200){
+        message.success("注册成功")
+        history.replace("/login/login")
+      }
+    })
   };
   const onFinishFailed = (errorInfo) => {
     message.error(errorInfo.errorFields[0].errors[0]);

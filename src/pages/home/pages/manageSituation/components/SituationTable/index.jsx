@@ -1,13 +1,61 @@
 import React from "react";
-import { useState } from "react";
-import { Button, Modal, Space, Slider, Select, Table } from "antd";
+import { useState, useEffect } from "react";
+import { Button, Modal, Space, Slider, Select, Table, message } from "antd";
+import PubSub from "pubsub-js";
+import httpUtil from "../../../../../../utils/httpUtil";
 
 import NumDropdown from "../NumDropdown";
 import TextDropdown from "../TextDropdown";
 
-export default function SituationTable() {
-  const { Option } = Select;
+export default function SituationTable(props) {
+  const manageData = props.manageData
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [manageEdit, setManageEdit] = useState(false);
+
+  // 企业经营信息
+  const [annualCost,setannualCost]=useState(manageData.annualCost)
+  const [annualTurnover,setannualTurnover]=useState(manageData.annualTurnover)
+  const [salesTaxpayer,setsalesTaxpayer]=useState(manageData.salesTaxpayer)
+  const [revenueRelateList,setrevenueRelateList]=useState(manageData.revenueRelateList)
+  const [costRelatedList,setcostRelatedList]=useState(manageData.costRelatedList)
+  const [manualRelatedDto,setmanualRelatedDto]=useState(manageData.manualRelatedDto)
+
+  const params={
+    enterpriseKey:manageData.enterpriseKey,
+    annualCost:parseInt(annualCost),
+    annualTurnover:parseInt(annualTurnover),
+    salesTaxpayer,
+    revenueRelateList,
+    costRelatedList,
+    manualRelatedDto
+  }
+
+  // 订阅表格修改
+  useEffect(() => {
+    const manageEditToken = PubSub.subscribe("manageEdit", (_, basicEdit) => {
+      if (basicEdit) {
+        setManageEdit(basicEdit);
+        message.success("表格修改已开启!");
+      } else setManageEdit(basicEdit);
+    });
+    const manageSaveToken = PubSub.subscribe("manageSave",(_,manageSave)=>{
+      httpUtil.saveEnterpriseManageMsg(params)
+      .then((res)=>{
+          const {code} = res
+          if(code===200){
+            message.success("保存成功!")
+            PubSub.publish("manageSaved",true)
+          }
+      })
+    })
+    return () => {
+      PubSub.unsubscribe(manageEditToken);
+      PubSub.unsubscribe(manageSaveToken);
+    };
+  }, []);
+
+  const { Option } = Select;
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -107,7 +155,14 @@ export default function SituationTable() {
         </tr>
         <tr className="ms-table-row">
           <td className="ms-title-td">年营业额(万元)</td>
-          <td className="ms-ic-info-td" colSpan={2}>1000</td>
+          <td className="ms-ic-info-td" colSpan={2}>
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="annual-turnover"
+              className="ms-input"
+            />
+          </td>
           <td className="ms-title-td">是否兼营销售纳税人</td>
           <td className="ms-ic-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
@@ -130,8 +185,22 @@ export default function SituationTable() {
         {/* 运输服务 */}
         <tr className="ms-table-row">
           <td className="ms-title-td">运输服务</td>
-          <td className="ms-ic-info-td">50%</td>
-          <td className="ms-ic-info-td">500</td>
+          <td className="ms-ic-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="transport-service-proportion"
+              className="ms-input"
+            />
+          </td>
+          <td className="ms-ic-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="transport-service-capital"
+              className="ms-input"
+            />
+          </td>
           <td className="ms-title-td" rowSpan={5}>
             甲方资质
           </td>
@@ -173,8 +242,22 @@ export default function SituationTable() {
         {/* 仓储、搬运服务 */}
         <tr className="ms-table-row">
           <td className="ms-title-td">仓储、搬运服务</td>
-          <td className="ms-ic-info-td">20%</td>
-          <td className="ms-ic-info-td">200</td>
+          <td className="ms-ic-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="storage-porterage-service-proportion"
+              className="ms-input"
+            />
+          </td>
+          <td className="ms-ic-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="storage-porterage-service-capital"
+              className="ms-input"
+            />
+          </td>
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
@@ -213,8 +296,22 @@ export default function SituationTable() {
         {/* 车辆销售 */}
         <tr className="ms-table-row">
           <td className="ms-title-td">车辆销售</td>
-          <td className="ms-ic-info-td">10%</td>
-          <td className="ms-ic-info-td">100</td>
+          <td className="ms-ic-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="vehicle-sale-service-proportion"
+              className="ms-input"
+            />
+          </td>
+          <td className="ms-ic-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="vehicle-sale-service-capital"
+              className="ms-input"
+            />
+          </td>
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
@@ -253,8 +350,22 @@ export default function SituationTable() {
         {/* 运输代理服务 */}
         <tr className="ms-table-row">
           <td className="ms-title-td">运输代理服务</td>
-          <td className="ms-ic-info-td">20%</td>
-          <td className="ms-ic-info-td">200</td>
+          <td className="ms-ic-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="transport-proxy-service-proportion"
+              className="ms-input"
+            />
+          </td>
+          <td className="ms-ic-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="transport-proxy-service-capital"
+              className="ms-input"
+            />
+          </td>
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
@@ -293,8 +404,22 @@ export default function SituationTable() {
         {/* 挂靠服务 */}
         <tr className="ms-table-row">
           <td className="ms-title-td">挂靠服务</td>
-          <td className="ms-ic-info-td">0%</td>
-          <td className="ms-ic-info-td">0</td>
+          <td className="ms-ic-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="affiliated-service-proportion"
+              className="ms-input"
+            />
+          </td>
+          <td className="ms-ic-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="affiliated-service-capital"
+              className="ms-input"
+            />
+          </td>
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
@@ -332,10 +457,31 @@ export default function SituationTable() {
         </tr>
         <tr className="ms-table-row">
           <td className="ms-title-td">收入总计</td>
-          <td className="ms-ic-info-td">100%</td>
-          <td className="ms-ic-info-td">1000</td>
+          <td className="ms-ic-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="income-total-proportion"
+              className="ms-input"
+            />
+          </td>
+          <td className="ms-ic-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="income-total-capital"
+              className="ms-input"
+            />
+          </td>
           <td className="ms-title-td">年经营成本(万元)</td>
-          <td>500</td>
+          <td>
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="annual-turnover-cost"
+              className="ms-input"
+            />
+          </td>
         </tr>
         <tr className="ms-table-row">
           <td className="ms-big-title" colSpan={5}>
@@ -352,8 +498,22 @@ export default function SituationTable() {
         {/* 车辆成本 */}
         <tr className="ms-table-row">
           <td className="ms-title-td">车辆成本</td>
-          <td className="ms-ex-info-td">40</td>
-          <td className="ms-ex-info-td">200</td>
+          <td className="ms-ex-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="vehicle-cost-propotion"
+              className="ms-input"
+            />
+          </td>
+          <td className="ms-ex-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="vehicle-cost-capital"
+              className="ms-input"
+            />
+          </td>
           <td className="ms-title-td" rowSpan={5}>
             供应商资质
           </td>
@@ -413,8 +573,22 @@ export default function SituationTable() {
         {/* 人工成本 */}
         <tr className="ms-table-row">
           <td className="ms-title-td">人工成本</td>
-          <td className="ms-ex-info-td">20</td>
-          <td className="ms-ex-info-td">100</td>
+          <td className="ms-ex-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="staff-cost-propotion"
+              className="ms-input"
+            />
+          </td>
+          <td className="ms-ex-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="staff-cost-capital"
+              className="ms-input"
+            />
+          </td>
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
@@ -471,8 +645,22 @@ export default function SituationTable() {
         {/* 办公成本 */}
         <tr className="ms-table-row">
           <td className="ms-title-td">办公成本</td>
-          <td className="ms-ex-info-td">5</td>
-          <td className="ms-ex-info-td">25</td>
+          <td className="ms-ex-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="office-cost-propotion"
+              className="ms-input"
+            />
+          </td>
+          <td className="ms-ex-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="office-cost-capital"
+              className="ms-input"
+            />
+          </td>
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
@@ -523,8 +711,22 @@ export default function SituationTable() {
         {/* 运输成本（油费） */}
         <tr className="ms-table-row">
           <td className="ms-title-td">运输成本（油费）</td>
-          <td className="ms-ex-info-td">25</td>
-          <td className="ms-ex-info-td">125</td>
+          <td className="ms-ex-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="transport-cost-oil-propotion"
+              className="ms-input"
+            />
+          </td>
+          <td className="ms-ex-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="transport-cost-oil-capital"
+              className="ms-input"
+            />
+          </td>
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
@@ -543,8 +745,22 @@ export default function SituationTable() {
         {/* 运输成本（路桥费） */}
         <tr className="ms-table-row">
           <td className="ms-title-td">运输成本（路桥费）</td>
-          <td className="ms-ex-info-td">10</td>
-          <td className="ms-ex-info-td">50</td>
+          <td className="ms-ex-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="transport-cost-bridge-propotion"
+              className="ms-input"
+            />
+          </td>
+          <td className="ms-ex-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="transport-cost-bridge-capital"
+              className="ms-input"
+            />
+          </td>
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
@@ -562,10 +778,31 @@ export default function SituationTable() {
         </tr>
         <tr className="ms-table-row">
           <td className="ms-title-td">支出总计</td>
-          <td className="ms-ex-info-td">100</td>
-          <td className="ms-ex-info-td">500</td>
+          <td className="ms-ex-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="expenditure-propotion"
+              className="ms-input"
+            />
+          </td>
+          <td className="ms-ex-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="expenditure-capital"
+              className="ms-input"
+            />
+          </td>
           <td className="ms-title-td">企业利润(万元)</td>
-          <td>500</td>
+          <td>
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="company-profit"
+              className="ms-input"
+            />
+          </td>
         </tr>
         <tr className="ms-table-row">
           <td className="ms-big-title" colSpan={5}>
@@ -574,15 +811,43 @@ export default function SituationTable() {
         </tr>
         <tr className="ms-table-row">
           <td className="ms-title-td">高管人数</td>
-          <td className="ms-ar-info-td" colSpan={2}>10</td>
+          <td className="ms-ar-info-td" colSpan={2}>
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="executive-number"
+              className="ms-input"
+            />
+          </td>
           <td className="ms-title-td">司机人数</td>
-          <td className="ms-ar-info-td">30</td>
+          <td className="ms-ar-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="driver-number"
+              className="ms-input"
+            />
+          </td>
         </tr>
         <tr className="ms-table-row">
           <td className="ms-title-td">平均工资</td>
-          <td className="ms-ar-info-td" colSpan={2}>20000</td>
+          <td className="ms-ar-info-td" colSpan={2}>
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="executive-average-salary"
+              className="ms-input"
+            />
+          </td>
           <td className="ms-title-td">平均工资</td>
-          <td className="ms-ar-info-td">10000</td>
+          <td className="ms-ar-info-td">
+            <input
+              disabled={!manageEdit}
+              type="text"
+              name="driver-average-salary"
+              className="ms-input"
+            />
+          </td>
         </tr>
         <tr className="ms-table-row">
           <td colSpan={5}>

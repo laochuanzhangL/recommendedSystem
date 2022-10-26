@@ -1,22 +1,31 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import { Form, Input, Button, Checkbox, Tabs } from "antd";
+import { Form, Input, Button, Checkbox, Tabs,message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-// import httpUtill from "../../../utils/httpUtil";
+import httpUtil from "../../../utils/httpUtil";
 
 import "./User.css";
 import BG from "../../../utils/BG";
 
-const Login = () => {
+const Login = (props) => {
+  const { history } = props.props;
   // 提交表单信息
   const onFinish = (values) => {
-    // const { code } = values;
-    // delete values.code;
-    // const data = {
-    //   userMessage: values,
-    //   code,
-    // };
     console.log(values);
+    const params={
+      uid:values.userID,
+      password:values.password,
+      verCode:""
+    }
+    httpUtil.login(params).then((res) => {
+      if(res.code==200){
+        message.success(res.message)
+        localStorage.setItem("uid",res.data.employeeInfo.uid)
+        localStorage.setItem("name",res.data.employeeInfo.name)
+        localStorage.setItem("token",res.data.employeeInfo.token)
+        history.push("/home")
+      }
+    });
   };
 
   return (
@@ -88,7 +97,7 @@ const Login = () => {
   );
 };
 
-export function User() {
+export function User(props) {
   return (
     <Fragment>
       <div className="login-wrap">
@@ -102,7 +111,7 @@ export function User() {
             {
               label: ` 用 户 登 录 `,
               key: "1",
-              children: <Login />,
+              children: <Login props={props} />,
               className: "login-select-form-content",
             },
           ]}

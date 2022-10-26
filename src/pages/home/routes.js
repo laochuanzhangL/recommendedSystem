@@ -5,8 +5,23 @@ import Solve from "./pages/solveAndCost";
 import Success from "./pages/successCase";
 import Detail from "./pages/detailedIntroduce";
 import Sign from "./pages/signContract";
+import HomePage from "./pages/homePage/components";
+import ProjectManage from "./pages/projectManage/components";
+import Bin from "./pages/bin/components";
 
 const Routes =[
+    {
+        path:'/home/homePage',
+        component:HomePage
+    },
+    {
+        path:'/home/projectManage',
+        component:ProjectManage
+    },
+    {
+        path:'/home/bin',
+        component:Bin
+    },
     {
         path:'/home/basic',
         component:Basic
