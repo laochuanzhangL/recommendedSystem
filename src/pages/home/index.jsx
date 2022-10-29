@@ -24,9 +24,10 @@ import {
 } from "antd";
 import PubSub from "pubsub-js";
 
-import Routes from "./routes";
 import Basic from "./pages/basicInformation";
 import Manage from "./pages/manageSituation";
+import HomePage from "./pages/homePage";
+import ProjectManage from "./pages/projectManage";
 import httpUtil from "../../utils/httpUtil.js";
 
 import "./index.css";
@@ -211,34 +212,6 @@ export default function Home() {
                 display: "flex",
               }}
             >
-              {/* <div style={{ display: pathname == "/home/basic" ? "flex" : "none" }}>
-            {mainCompanies.map((item, index) => {
-              return (
-                <div
-                  className={
-                    item.checked
-                      ? "mainCompany mainCompany-active"
-                      : "mainCompany "
-                  }
-                  key={index}
-                  onClick={itemClick.bind(this, item, index)}
-                >
-                  {item.name}
-                </div>
-              );
-            })}
-            <div className="iconfont" onClick={showModal}>
-              &#xe608;
-            </div>
-            <Modal
-              title="请输入公司名字"
-              open={isModalOpen}
-              onOk={handleOk}
-              onCancel={handleCancel}
-            >
-              <Input placeholder="主题公司名字" />
-            </Modal>
-          </div> */}
               <div>
                 <Button
                   className="saveBtn"
@@ -249,9 +222,9 @@ export default function Home() {
                     setEdit({
                       basicEdit: false,
                     });
-                    if(basicEdit){
-                    PubSub.publish("basicEdit", !basicEdit);
-                    PubSub.publish("basicSave",true)
+                    if (basicEdit) {
+                      PubSub.publish("basicEdit", !basicEdit);
+                      PubSub.publish("basicSave", true);
                     }
                   }}
                 >
@@ -266,8 +239,7 @@ export default function Home() {
                       basicEdit: true,
                       manageEdit: false,
                     });
-                    if(!basicEdit)
-                    PubSub.publish("basicEdit", !basicEdit);
+                    if (!basicEdit) PubSub.publish("basicEdit", !basicEdit);
                   }}
                 >
                   修改
@@ -275,7 +247,7 @@ export default function Home() {
               </div>
             </Space>
             <Switch>
-                <Route path={'/home/basic'} component={Basic} />
+              <Route path={"/home/basic"} component={Basic} />
               <Redirect to="/home/homePage" />
             </Switch>
           </Content>
@@ -297,34 +269,6 @@ export default function Home() {
                 display: "flex",
               }}
             >
-              {/* <div style={{ display: pathname == "/home/basic" ? "flex" : "none" }}>
-            {mainCompanies.map((item, index) => {
-              return (
-                <div
-                  className={
-                    item.checked
-                      ? "mainCompany mainCompany-active"
-                      : "mainCompany "
-                  }
-                  key={index}
-                  onClick={itemClick.bind(this, item, index)}
-                >
-                  {item.name}
-                </div>
-              );
-            })}
-            <div className="iconfont" onClick={showModal}>
-              &#xe608;
-            </div>
-            <Modal
-              title="请输入公司名字"
-              open={isModalOpen}
-              onOk={handleOk}
-              onCancel={handleCancel}
-            >
-              <Input placeholder="主题公司名字" />
-            </Modal>
-          </div> */}
               <div>
                 <Button
                   className="saveBtn"
@@ -335,7 +279,7 @@ export default function Home() {
                     setEdit({
                       manageEdit: false,
                     });
-                    if(manageEdit){
+                    if (manageEdit) {
                       PubSub.publish("manageEdit", !manageEdit);
                       PubSub.publish("manageSave", true);
                     }
@@ -352,8 +296,7 @@ export default function Home() {
                       basicEdit: false,
                       manageEdit: true,
                     });
-                    if(!manageEdit)
-                    PubSub.publish("manageEdit", !manageEdit);
+                    if (!manageEdit) PubSub.publish("manageEdit", !manageEdit);
                   }}
                 >
                   修改
@@ -361,83 +304,20 @@ export default function Home() {
               </div>
             </Space>
             <Switch>
-                <Route path={'/home/manage'} component={Manage} />
+              <Route path={"/home/manage"} component={Manage} />
               <Redirect to="/home/homePage" />
             </Switch>
           </Content>
         ) : pathname == "/home/homePage" ? (
-          <Layout>
-            <div className="homePage-top-layout-background"></div>
-            <div className="homePage-middle-layout-background"></div>
-            <div className="homePage-buttom-layout-background"></div>
-          </Layout>
+          <Switch>
+            <Route path={"/home/homePage"} component={HomePage} />
+            <Redirect to="/home/homePage" />
+          </Switch>
         ) : pathname == "/home/projectManage" ? (
-          <Layout>
-            <div className="projectManage-top-layout-background">
-              <div className="projectManage-top-title-wrap">
-                <span>查询</span>
-              </div>
-              <div className="projectManage-top-queryForm-wrap1">
-                <div>
-                  <span>项目编号&nbsp;</span>
-                  <Input type="text" style={{ width: "15vw" }}></Input>
-                </div>
-                <div>
-                  <span>企业名称&nbsp;</span>
-                  <Input type="text" style={{ width: "15vw" }}></Input>
-                </div>
-                <div>
-                  <span>所属行业&nbsp;</span>
-                  <Select style={{ width: "15vw" }}>
-                    <Select.Option>物流运输行业</Select.Option>
-                    <Select.Option>建筑行业</Select.Option>
-                    <Select.Option>教育培训行业</Select.Option>
-                    <Select.Option>科技行业</Select.Option>
-                  </Select>
-                </div>
-                <div>
-                  <span>项目状态&nbsp;</span>
-                  <Select style={{ width: "10vw" }}>
-                    <Select.Option>暂定</Select.Option>
-                    <Select.Option>暂定</Select.Option>
-                  </Select>
-                </div>
-              </div>
-              <div className="projectManage-top-queryForm-wrap2">
-                <div>
-                  <span>创建时间&nbsp;</span>
-                  <DatePicker.RangePicker
-                    showTime
-                    style={{ width: "35.3vw" }}
-                  ></DatePicker.RangePicker>
-                </div>
-                <div>
-                  <span>完成时间&nbsp;</span>
-                  <DatePicker.RangePicker
-                    showTime
-                    style={{ width: "36vw" }}
-                  ></DatePicker.RangePicker>
-                </div>
-              </div>
-              <div className="projectManage-top-actionBtn-wrap">
-                <div className="projectManage-top-leftBtn-wrap">
-                  <Space size={"middle"}>
-                    <Button danger>删除</Button>
-                    <Button>导出</Button>
-                  </Space>
-                </div>
-                <div className="projectManage-top-rightBtn-wrap">
-                  <Space size={"middle"}>
-                    <Button type="primary">搜索</Button>
-                    <Button>重置</Button>
-                  </Space>
-                </div>
-              </div>
-            </div>
-            <div className="projectManage-buttom-layout-background">
-              <Table></Table>
-            </div>
-          </Layout>
+          <Switch>
+            <Route path={"/home/projectManage"} component={ProjectManage} />
+            <Redirect to="/home/homePage" />
+          </Switch>
         ) : (
           <Content
             className="site-layout-background"
@@ -545,12 +425,6 @@ export default function Home() {
                 </Button>
               </div>
             </Space>
-            <Switch>
-              {Routes.map((item) => (
-                <Route path={item.path} component={item.component} />
-              ))}
-              <Redirect to="/home/homePage" />
-            </Switch>
           </Content>
         )}
       </Layout>

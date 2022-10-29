@@ -5,9 +5,9 @@ import Solve from "./pages/solveAndCost";
 import Success from "./pages/successCase";
 import Detail from "./pages/detailedIntroduce";
 import Sign from "./pages/signContract";
-import HomePage from "./pages/homePage/components";
-import ProjectManage from "./pages/projectManage/components";
-import Bin from "./pages/bin/components";
+import HomePage from "./pages/homePage";
+import ProjectManage from "./pages/projectManage";
+import Bin from "./pages/bin";
 
 const Routes =[
     {

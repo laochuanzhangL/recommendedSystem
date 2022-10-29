@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import PubSub from "pubsub-js";
 import moment from "moment";
 
-import { message } from "antd";
 import "./index.css";
 
 export default function Basic() {
@@ -13,6 +12,8 @@ export default function Basic() {
   let date = new Date();
   // 获得uid
   const uid = localStorage.getItem("uid");
+
+  const [basicSaved,setBasicSaved] = useState(false)
 
   const [basicInfoData, setBasicInfoData] = useState({
     enterpriseKey: "",
@@ -45,6 +46,7 @@ export default function Basic() {
         uid,
         enterpriseKey: savedKey,
       };
+      setBasicSaved(true)
       // 保存后获取企业基本信息
       httpUtil.getEnterpriseBasicMsg(params).then((res) => {
         const { code, data:enterpriseBasicMsgVo } = res;
@@ -60,7 +62,7 @@ export default function Basic() {
     };
     
     // 加载时获取企业基本信息
-    if (enterpriseKey != "") {
+    if (enterpriseKey != "" && enterpriseKey != undefined) {
       httpUtil.getEnterpriseBasicMsg(params).then((res) => {
         const { code, data:enterpriseBasicMsgVo } = res;
         if (code === 200) {

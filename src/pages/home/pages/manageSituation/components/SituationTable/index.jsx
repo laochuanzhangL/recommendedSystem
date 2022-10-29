@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useState, useEffect } from "react";
-import { Button, Modal, Space, Slider, Select, Table, message } from "antd";
+import { Button, Modal, Space, Select, Table, message } from "antd";
 import PubSub from "pubsub-js";
 import httpUtil from "../../../../../../utils/httpUtil";
 
@@ -8,53 +8,186 @@ import NumDropdown from "../NumDropdown";
 import TextDropdown from "../TextDropdown";
 
 export default function SituationTable(props) {
-  const manageData = props.manageData
+  const manageData = props.manageData;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [manageEdit, setManageEdit] = useState(false);
 
   // 企业经营信息
-  const [annualCost,setannualCost]=useState(manageData.annualCost)
-  const [annualTurnover,setannualTurnover]=useState(manageData.annualTurnover)
-  const [salesTaxpayer,setsalesTaxpayer]=useState(manageData.salesTaxpayer)
-  const [revenueRelateList,setrevenueRelateList]=useState(manageData.revenueRelateList)
-  const [costRelatedList,setcostRelatedList]=useState(manageData.costRelatedList)
-  const [manualRelatedDto,setmanualRelatedDto]=useState(manageData.manualRelatedDto)
+  const [annualCost, setannualCost] = useState(manageData.annualCost);
+  const [annualTurnover, setannualTurnover] = useState(
+    manageData.annualTurnover
+  );
+  const [salesTaxpayer, setsalesTaxpayer] = useState(manageData.salesTaxpayer);
+  const [revenueRelateList, setrevenueRelateList] = useState(
+    manageData.revenueRelateList
+  );
+  const [costRelatedList, setcostRelatedList] = useState(
+    manageData.costRelatedList
+  );
+  const [manualRelatedDto, setmanualRelatedDto] = useState(
+    manageData.manualRelatedDto
+  );
 
-  const params={
-    enterpriseKey:manageData.enterpriseKey,
+  // 年经营成本, 收入合计，支出合计的ref
+  const aCostRef = useRef()
+  const totalRevRef = useRef()
+  const totalCostRef = useRef()
+
+  // 各服务，成本的ref
+  const tsRef=useRef()
+
+  const params = {
+    enterpriseKey: manageData.enterpriseKey,
     annualCost:parseInt(annualCost),
     annualTurnover:parseInt(annualTurnover),
     salesTaxpayer,
     revenueRelateList,
     costRelatedList,
-    manualRelatedDto
+    manualRelatedDto,
+  };
+  // 各甲方资质选择改变函数
+  // 运输服务
+  const transportGeneralTaxpayerRatioChange = (ratio) => {
+    revenueRelateList[0].generalTaxpayerRatio = parseInt(ratio)
+    setrevenueRelateList(revenueRelateList)
+  }
+  const transportSmallScaleTaxpayerRatioChange = (ratio) => {
+    revenueRelateList[0].smallscaleTaxpayerRatio = parseInt(ratio)
+    setrevenueRelateList(revenueRelateList)
+  }
+  const transportNaturalPersonRatioChange = (ratio) => {
+    revenueRelateList[0].naturalPersonRatio = parseInt(ratio)
+    setrevenueRelateList(revenueRelateList)
+  }
+  // 仓储、搬运服务
+  const storeGeneralTaxpayerRatioChange = (ratio) => {
+    revenueRelateList[1].generalTaxpayerRatio = parseInt(ratio)
+    setrevenueRelateList(revenueRelateList)
+  }
+  const storeSmallScaleTaxpayerRatioChange = (ratio) => {
+    revenueRelateList[1].smallscaleTaxpayerRatio = parseInt(ratio)
+    setrevenueRelateList(revenueRelateList)
+  }
+  const storeNaturalPersonRatioChange = (ratio) => {
+    revenueRelateList[1].naturalPersonRatio = parseInt(ratio)
+    setrevenueRelateList(revenueRelateList)
+  }
+  // 车辆销售
+  const saleGeneralTaxpayerRatioChange = (ratio) => {
+    revenueRelateList[2].generalTaxpayerRatio = parseInt(ratio)
+    setrevenueRelateList(revenueRelateList)
+  }
+  const saleSmallScaleTaxpayerRatioChange = (ratio) => {
+    revenueRelateList[2].smallscaleTaxpayerRatio = parseInt(ratio)
+    setrevenueRelateList(revenueRelateList)
+  }
+  const saleNaturalPersonRatioChange = (ratio) => {
+    revenueRelateList[2].naturalPersonRatio = parseInt(ratio)
+    setrevenueRelateList(revenueRelateList)
+  }
+  // 运输代理服务
+  const proxyGeneralTaxpayerRatioChange = (ratio) => {
+    revenueRelateList[3].generalTaxpayerRatio = parseInt(ratio)
+    setrevenueRelateList(revenueRelateList)
+  }
+  const proxySmallScaleTaxpayerRatioChange = (ratio) => {
+    revenueRelateList[3].smallscaleTaxpayerRatio = parseInt(ratio)
+    setrevenueRelateList(revenueRelateList)
+  }
+  const proxyNaturalPersonRatioChange = (ratio) => {
+    revenueRelateList[3].naturalPersonRatio = parseInt(ratio)
+    setrevenueRelateList(revenueRelateList)
+  }
+  // 挂靠服务
+  const anchorGeneralTaxpayerRatioChange = (ratio) => {
+    revenueRelateList[4].generalTaxpayerRatio = parseInt(ratio)
+    setrevenueRelateList(revenueRelateList)
+  }
+  const anchorSmallScaleTaxpayerRatioChange = (ratio) => {
+    revenueRelateList[4].smallscaleTaxpayerRatio = parseInt(ratio)
+    setrevenueRelateList(revenueRelateList)
+  }
+  const anchorNaturalPersonRatioChange = (ratio) => {
+    revenueRelateList[4].naturalPersonRatio = parseInt(ratio)
+    setrevenueRelateList(revenueRelateList)
   }
 
-  // 订阅表格修改
+  // 各供应商资质选择改变函数
+  // 车辆成本
+  const vehicleGeneralTaxpayerRatioChange = (ratio) => {
+    costRelatedList[0].supplierProportions[0].proportion = parseInt(ratio)
+    setcostRelatedList(costRelatedList)
+  }
+  const vehicleSmallScaleTaxpayerRatioChange = (ratio) => {
+    costRelatedList[0].supplierProportions[1].proportion = parseInt(ratio)
+    setcostRelatedList(costRelatedList)
+  }
+  const vehicleNaturalPersonRatioChange = (ratio) => {
+    costRelatedList[0].supplierProportions[2].proportion = parseInt(ratio)
+    setcostRelatedList(costRelatedList)
+  }
+  // 人工成本
+  const staffGeneralTaxpayerRatioChange = (ratio) => {
+    costRelatedList[1].supplierProportions[0].proportion = parseInt(ratio)
+    setcostRelatedList(costRelatedList)
+  }
+  const staffSmallScaleTaxpayerRatioChange = (ratio) => {
+    costRelatedList[1].supplierProportions[1].proportion = parseInt(ratio)
+    setcostRelatedList(costRelatedList)
+  }
+  const staffNaturalPersonRatioChange = (ratio) => {
+    costRelatedList[1].supplierProportions[2].proportion = parseInt(ratio)
+    setcostRelatedList(costRelatedList)
+  }
+  // 办公成本
+  const officeGeneralTaxpayerRatioChange = (ratio) => {
+    costRelatedList[2].supplierProportions[0].proportion = parseInt(ratio)
+    setcostRelatedList(costRelatedList)
+  }
+  const officeSmallScaleTaxpayerRatioChange = (ratio) => {
+    costRelatedList[2].supplierProportions[1].proportion = parseInt(ratio)
+    setcostRelatedList(costRelatedList)
+  }
+  const officeNaturalPersonRatioChange = (ratio) => {
+    costRelatedList[2].supplierProportions[2].proportion = parseInt(ratio)
+    setcostRelatedList(costRelatedList)
+  }
+  // 运输成本(油费)
+  const oilGeneralTaxpayerRatioChange = (ratio) => {
+    costRelatedList[3].supplierProportions[0].proportion = parseInt(ratio)
+    setcostRelatedList(costRelatedList)
+  }
+  // 运输成本(路桥费)
+  const bridgeGeneralTaxpayerRatioChange = (ratio) => {
+    costRelatedList[4].supplierProportions[0].proportion = parseInt(ratio)
+    setcostRelatedList(costRelatedList)
+  }
+  
+
+
   useEffect(() => {
+    // 订阅表格修改
     const manageEditToken = PubSub.subscribe("manageEdit", (_, basicEdit) => {
       if (basicEdit) {
         setManageEdit(basicEdit);
         message.success("表格修改已开启!");
       } else setManageEdit(basicEdit);
     });
-    const manageSaveToken = PubSub.subscribe("manageSave",(_,manageSave)=>{
-      httpUtil.saveEnterpriseManageMsg(params)
-      .then((res)=>{
-          const {code} = res
-          if(code===200){
-            message.success("保存成功!")
-            PubSub.publish("manageSaved",true)
-          }
-      })
-    })
+    // 保存表格
+    const manageSaveToken = PubSub.subscribe("manageSave", (_, manageSave) => {
+      httpUtil.saveEnterpriseManageMsg(params).then((res) => {
+        const { code } = res;
+        if (code === 200) {
+          message.success("保存成功!");
+          PubSub.publish("manageSaved", true);
+        }
+      });
+    });
     return () => {
       PubSub.unsubscribe(manageEditToken);
       PubSub.unsubscribe(manageSaveToken);
     };
   }, []);
-
-  const { Option } = Select;
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -161,16 +294,39 @@ export default function SituationTable(props) {
               type="text"
               name="annual-turnover"
               className="ms-input"
+              defaultValue={annualTurnover}
+              onBlur={(e) => {
+                const annualTurnover = e.target.value;
+                setannualTurnover(annualTurnover);
+              }}
             />
           </td>
           <td className="ms-title-td">是否兼营销售纳税人</td>
           <td className="ms-ic-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
-                <input type="radio" name="isSalesTaxpayer" />是
+                <input
+                  disabled={!manageEdit}
+                  type="radio"
+                  name="isSalesTaxpayer"
+                  defaultValue={salesTaxpayer}
+                  onClick={() => {
+                    setsalesTaxpayer(1);
+                  }}
+                />
+                是
               </div>
               <div>
-                <input type="radio" name="isSalesTaxpayer" />否
+                <input
+                  disabled={!manageEdit}
+                  type="radio"
+                  name="isSalesTaxpayer"
+                  defaultValue={salesTaxpayer}
+                  onClick={() => {
+                    setsalesTaxpayer(0);
+                  }}
+                />
+                否
               </div>
             </div>
           </td>
@@ -191,6 +347,13 @@ export default function SituationTable(props) {
               type="text"
               name="transport-service-proportion"
               className="ms-input"
+              defaultValue={revenueRelateList[0].businessRatio}
+              ref={tsRef}
+              onBlur={(e)=>{
+                const businessRatio = e.target.value
+                revenueRelateList[0].businessRatio = parseInt(businessRatio)
+                setrevenueRelateList(revenueRelateList)
+              }}
             />
           </td>
           <td className="ms-ic-info-td">
@@ -199,6 +362,12 @@ export default function SituationTable(props) {
               type="text"
               name="transport-service-capital"
               className="ms-input"
+              defaultValue={revenueRelateList[0].amount}
+              onBlur={(e)=>{
+                const amount = e.target.value
+                revenueRelateList[0].amount = parseInt(amount)
+                setrevenueRelateList(revenueRelateList)
+              }}
             />
           </td>
           <td className="ms-title-td" rowSpan={5}>
@@ -207,32 +376,47 @@ export default function SituationTable(props) {
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 一般纳税人 (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={revenueRelateList[0].generalTaxpayerRatio}
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={transportGeneralTaxpayerRatioChange}
                 />
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 小规模纳税人 (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={revenueRelateList[0].smallscaleTaxpayerRatio}
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={transportSmallScaleTaxpayerRatioChange}
                 />
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 自然人(
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={revenueRelateList[0].naturalPersonRatio}
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={transportNaturalPersonRatioChange}
                 />
                 )
               </div>
@@ -248,6 +432,12 @@ export default function SituationTable(props) {
               type="text"
               name="storage-porterage-service-proportion"
               className="ms-input"
+              defaultValue={revenueRelateList[1].businessRatio}
+              onBlur={(e)=>{
+                const businessRatio = e.target.value
+                revenueRelateList[1].businessRatio = parseInt(businessRatio)
+                setrevenueRelateList(revenueRelateList)
+              }}
             />
           </td>
           <td className="ms-ic-info-td">
@@ -256,37 +446,58 @@ export default function SituationTable(props) {
               type="text"
               name="storage-porterage-service-capital"
               className="ms-input"
+              defaultValue={revenueRelateList[1].amount}
+              onBlur={(e)=>{
+                const amount = e.target.value
+                revenueRelateList[1].amount = parseInt(amount)
+                setrevenueRelateList(revenueRelateList)
+              }}
             />
           </td>
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 一般纳税人 (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={revenueRelateList[1].generalTaxpayerRatio}
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={storeGeneralTaxpayerRatioChange}
                 />
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 小规模纳税人 (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={revenueRelateList[1].smallscaleTaxpayerRatio}
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={storeSmallScaleTaxpayerRatioChange}
                 />
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 自然人 (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={revenueRelateList[1].naturalPersonRatio}
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={storeNaturalPersonRatioChange}
                 />
                 )
               </div>
@@ -302,6 +513,12 @@ export default function SituationTable(props) {
               type="text"
               name="vehicle-sale-service-proportion"
               className="ms-input"
+              defaultValue={revenueRelateList[2].businessRatio}
+              onBlur={(e)=>{
+                const businessRatio = e.target.value
+                revenueRelateList[2].businessRatio = parseInt(businessRatio)
+                setrevenueRelateList(revenueRelateList)
+              }}
             />
           </td>
           <td className="ms-ic-info-td">
@@ -310,37 +527,58 @@ export default function SituationTable(props) {
               type="text"
               name="vehicle-sale-service-capital"
               className="ms-input"
+              defaultValue={revenueRelateList[2].amount}
+              onBlur={(e)=>{
+                const amount = e.target.value
+                revenueRelateList[2].amount = parseInt(amount)
+                setrevenueRelateList(revenueRelateList)
+              }}
             />
           </td>
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 一般纳税人 (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={revenueRelateList[2].generalTaxpayerRatio}
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={saleGeneralTaxpayerRatioChange}
                 />
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 小规模纳税人 (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={revenueRelateList[2].smallscaleTaxpayerRatio}
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={saleSmallScaleTaxpayerRatioChange}
                 />
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 自然人 (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={revenueRelateList[2].naturalPersonRatio}
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={saleNaturalPersonRatioChange}
                 />
                 )
               </div>
@@ -356,6 +594,12 @@ export default function SituationTable(props) {
               type="text"
               name="transport-proxy-service-proportion"
               className="ms-input"
+              defaultValue={revenueRelateList[3].businessRatio}
+              onBlur={(e)=>{
+                const businessRatio = e.target.value
+                revenueRelateList[3].businessRatio = parseInt(businessRatio)
+                setrevenueRelateList(revenueRelateList)
+              }}
             />
           </td>
           <td className="ms-ic-info-td">
@@ -364,37 +608,58 @@ export default function SituationTable(props) {
               type="text"
               name="transport-proxy-service-capital"
               className="ms-input"
+              defaultValue={revenueRelateList[3].amount}
+              onBlur={(e)=>{
+                const amount = e.target.value
+                revenueRelateList[3].amount = parseInt(amount)
+                setrevenueRelateList(revenueRelateList)
+              }}
             />
           </td>
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 一般纳税人 (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={revenueRelateList[3].generalTaxpayerRatio}
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={proxyGeneralTaxpayerRatioChange}
                 />
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 小规模纳税人 (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={revenueRelateList[3].smallscaleTaxpayerRatio}
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={proxySmallScaleTaxpayerRatioChange}
                 />
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 自然人 (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={revenueRelateList[3].naturalPersonRatio}
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={proxyNaturalPersonRatioChange}
                 />
                 )
               </div>
@@ -410,6 +675,12 @@ export default function SituationTable(props) {
               type="text"
               name="affiliated-service-proportion"
               className="ms-input"
+              defaultValue={revenueRelateList[4].businessRatio}
+              onBlur={(e)=>{
+                const businessRatio = e.target.value
+                revenueRelateList[4].businessRatio = parseInt(businessRatio)
+                setrevenueRelateList(revenueRelateList)
+              }}
             />
           </td>
           <td className="ms-ic-info-td">
@@ -418,37 +689,58 @@ export default function SituationTable(props) {
               type="text"
               name="affiliated-service-capital"
               className="ms-input"
+              defaultValue={revenueRelateList[4].amount}
+              onBlur={(e)=>{
+                const amount = e.target.value
+                revenueRelateList[4].amount = parseInt(amount)
+                setrevenueRelateList(revenueRelateList)
+              }}
             />
           </td>
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 一般纳税人 (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={revenueRelateList[4].generalTaxpayerRatio}
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={anchorGeneralTaxpayerRatioChange}
                 />
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 小规模纳税人 (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={revenueRelateList[4].smallscaleTaxpayerRatio}
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={anchorSmallScaleTaxpayerRatioChange}
                 />
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 自然人 (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={revenueRelateList[4].naturalPersonRatio}
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={anchorNaturalPersonRatioChange}
                 />
                 )
               </div>
@@ -471,6 +763,8 @@ export default function SituationTable(props) {
               type="text"
               name="income-total-capital"
               className="ms-input"
+              defaultValue={annualTurnover}
+              ref={totalRevRef}
             />
           </td>
           <td className="ms-title-td">年经营成本(万元)</td>
@@ -480,6 +774,12 @@ export default function SituationTable(props) {
               type="text"
               name="annual-turnover-cost"
               className="ms-input"
+              defaultValue={annualCost}
+              onBlur={(e) => {
+                const annualCost = e.target.value;
+                setannualCost(annualCost);
+              }}
+              ref={aCostRef}
             />
           </td>
         </tr>
@@ -504,6 +804,12 @@ export default function SituationTable(props) {
               type="text"
               name="vehicle-cost-propotion"
               className="ms-input"
+              defaultValue={costRelatedList[0].costRatio}
+              onBlur={(e)=>{
+                const costRatio = e.target.value 
+                costRelatedList[0].costRatio=parseInt(costRatio)
+                setcostRelatedList(costRelatedList)           
+              }}
             />
           </td>
           <td className="ms-ex-info-td">
@@ -520,7 +826,11 @@ export default function SituationTable(props) {
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 一般纳税人 (
                 <TextDropdown
                   arr={carCostGeneral}
@@ -530,13 +840,20 @@ export default function SituationTable(props) {
                 ) (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={
+                    costRelatedList[0].supplierProportions[0].proportion
+                  }
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={vehicleGeneralTaxpayerRatioChange}
                 />
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 小规模纳税人 (
                 <TextDropdown
                   arr={carCostSmall}
@@ -546,13 +863,20 @@ export default function SituationTable(props) {
                 ) (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={
+                    costRelatedList[0].supplierProportions[1].proportion
+                  }
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={vehicleSmallScaleTaxpayerRatioChange}
                 />
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 自然人 (
                 <TextDropdown
                   arr={carCostNatural}
@@ -562,8 +886,11 @@ export default function SituationTable(props) {
                 ) (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={
+                    costRelatedList[0].supplierProportions[2].proportion
+                  }
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={vehicleNaturalPersonRatioChange}
                 />
                 )
               </div>
@@ -579,6 +906,12 @@ export default function SituationTable(props) {
               type="text"
               name="staff-cost-propotion"
               className="ms-input"
+              defaultValue={costRelatedList[1].costRatio}
+              onBlur={(e)=>{
+                const costRatio = e.target.value 
+                costRelatedList[1].costRatio=parseInt(costRatio)
+                setcostRelatedList(costRelatedList)           
+              }}
             />
           </td>
           <td className="ms-ex-info-td">
@@ -592,7 +925,11 @@ export default function SituationTable(props) {
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 一般纳税人 (
                 <TextDropdown
                   arr={LaborCostGeneral}
@@ -602,13 +939,20 @@ export default function SituationTable(props) {
                 ) (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={
+                    costRelatedList[1].supplierProportions[0].proportion
+                  }
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={staffGeneralTaxpayerRatioChange}
                 />
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 小规模纳税人 (
                 <TextDropdown
                   arr={LaborCostSmall}
@@ -618,13 +962,20 @@ export default function SituationTable(props) {
                 ) (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={
+                    costRelatedList[1].supplierProportions[1].proportion
+                  }
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={staffSmallScaleTaxpayerRatioChange}
                 />
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 自然人 (
                 <TextDropdown
                   arr={LaborCostNatural}
@@ -634,8 +985,11 @@ export default function SituationTable(props) {
                 ) (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={
+                    costRelatedList[1].supplierProportions[2].proportion
+                  }
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={staffNaturalPersonRatioChange}
                 />
                 )
               </div>
@@ -651,6 +1005,12 @@ export default function SituationTable(props) {
               type="text"
               name="office-cost-propotion"
               className="ms-input"
+              defaultValue={costRelatedList[2].costRatio}
+              onBlur={(e)=>{
+                const costRatio = e.target.value 
+                costRelatedList[2].costRatio=parseInt(costRatio)
+                setcostRelatedList(costRelatedList)           
+              }}
             />
           </td>
           <td className="ms-ex-info-td">
@@ -664,17 +1024,34 @@ export default function SituationTable(props) {
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 一般纳税人 (
+                <TextDropdown
+                  arr={OfficeCostSmall}
+                  defaultValue={"专票"}
+                  popupClassName={"selectDropdown-short"}
+                />
+                )(
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={
+                    costRelatedList[2].supplierProportions[0].proportion
+                  }
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={officeGeneralTaxpayerRatioChange}
                 />
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 小规模纳税人 (
                 <TextDropdown
                   arr={OfficeCostSmall}
@@ -684,13 +1061,20 @@ export default function SituationTable(props) {
                 ) (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={
+                    costRelatedList[2].supplierProportions[1].proportion
+                  }
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={officeSmallScaleTaxpayerRatioChange}
                 />
                 )
               </div>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 自然人 (
                 <TextDropdown
                   arr={OfficeCostNatural}
@@ -700,8 +1084,11 @@ export default function SituationTable(props) {
                 ) (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={
+                    costRelatedList[2].supplierProportions[2].proportion
+                  }
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={officeNaturalPersonRatioChange}
                 />
                 )
               </div>
@@ -717,6 +1104,12 @@ export default function SituationTable(props) {
               type="text"
               name="transport-cost-oil-propotion"
               className="ms-input"
+              defaultValue={costRelatedList[3].costRatio}
+              onBlur={(e)=>{
+                const costRatio = e.target.value 
+                costRelatedList[3].costRatio=parseInt(costRatio)
+                setcostRelatedList(costRelatedList)           
+              }}
             />
           </td>
           <td className="ms-ex-info-td">
@@ -730,12 +1123,19 @@ export default function SituationTable(props) {
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 一般纳税人 (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={
+                    costRelatedList[3].supplierProportions[0].proportion
+                  }
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={oilGeneralTaxpayerRatioChange}
                 />
                 )
               </div>
@@ -751,6 +1151,12 @@ export default function SituationTable(props) {
               type="text"
               name="transport-cost-bridge-propotion"
               className="ms-input"
+              defaultValue={costRelatedList[4].costRatio}
+              onBlur={(e)=>{
+                const costRatio = e.target.value 
+                costRelatedList[4].costRatio=parseInt(costRatio)
+                setcostRelatedList(costRelatedList)           
+              }}
             />
           </td>
           <td className="ms-ex-info-td">
@@ -764,12 +1170,19 @@ export default function SituationTable(props) {
           <td className="ms-qua-info-td">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div>
-                <input type="radio" name="isTransportationServices" />
+                <input
+                  disabled={!manageEdit}
+                  type="checkbox"
+                  name="isTransportationServices"
+                />
                 一般纳税人 (
                 <NumDropdown
                   arr={number}
-                  defaultValue={0}
+                  defaultValue={
+                    costRelatedList[4].supplierProportions[0].proportion
+                  }
                   popupClassName={"selectDropdown-short"}
+                  ratioChange={bridgeGeneralTaxpayerRatioChange}
                 />
                 )
               </div>
@@ -792,6 +1205,7 @@ export default function SituationTable(props) {
               type="text"
               name="expenditure-capital"
               className="ms-input"
+              ref={totalCostRef}
             />
           </td>
           <td className="ms-title-td">企业利润(万元)</td>
@@ -801,6 +1215,7 @@ export default function SituationTable(props) {
               type="text"
               name="company-profit"
               className="ms-input"
+              // value={totalRevRef.current.value-totalCostRef.current.value===0?"":totalRevRef.current.value-totalCostRef.current.value}
             />
           </td>
         </tr>
@@ -817,6 +1232,12 @@ export default function SituationTable(props) {
               type="text"
               name="executive-number"
               className="ms-input"
+              defaultValue={manualRelatedDto.managerNumber}
+              onBlur={(e)=>{
+                const managerNumber = e.target.value
+                manualRelatedDto.managerNumber = parseInt(managerNumber)
+                setmanualRelatedDto(manualRelatedDto)
+              }}
             />
           </td>
           <td className="ms-title-td">司机人数</td>
@@ -826,6 +1247,12 @@ export default function SituationTable(props) {
               type="text"
               name="driver-number"
               className="ms-input"
+              defaultValue={manualRelatedDto.driverNumber}
+              onBlur={(e)=>{
+                const driverNumber = e.target.value
+                manualRelatedDto.driverNumber = parseInt(driverNumber)
+                setmanualRelatedDto(manualRelatedDto)
+              }}
             />
           </td>
         </tr>
@@ -837,6 +1264,12 @@ export default function SituationTable(props) {
               type="text"
               name="executive-average-salary"
               className="ms-input"
+              defaultValue={manualRelatedDto.managerAvgSalary}
+              onBlur={(e)=>{
+                const managerAvgSalary = e.target.value
+                manualRelatedDto.managerAvgSalary = parseInt(managerAvgSalary)
+                setmanualRelatedDto(manualRelatedDto)
+              }}
             />
           </td>
           <td className="ms-title-td">平均工资</td>
@@ -846,6 +1279,12 @@ export default function SituationTable(props) {
               type="text"
               name="driver-average-salary"
               className="ms-input"
+              defaultValue={manualRelatedDto.driverAvgSalary}
+              onBlur={(e)=>{
+                const driverAvgSalary = e.target.value
+                manualRelatedDto.driverAvgSalary = parseInt(driverAvgSalary)
+                setmanualRelatedDto(manualRelatedDto)
+              }}
             />
           </td>
         </tr>
