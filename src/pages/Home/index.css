@@ -2,18 +2,18 @@
   margin: 0;
   padding: 0;
 }
-table{
+table {
   width: 99%;
   margin: 1px auto;
   text-align: center;
   border: 2px solid rgb(221, 221, 221);
 }
 
-tr button{
+tr button {
   border-radius: 8px !important;
 }
 
-td{
+td {
   border: 1px solid rgb(221, 221, 221);
 }
 .ant-layout-sider-children {
@@ -46,6 +46,9 @@ td{
 .site-layout .site-layout-background {
   background: #fff;
 }
+
+
+
 .ant-menu-item-only-child {
   font-family: "Arial Black", "Arial Normal", "Arial";
   font-weight: 900;
@@ -58,6 +61,21 @@ td{
 }
 .ant-layout-header {
   line-height: normal;
+  background: linear-gradient(
+    90deg,
+    rgb(2, 125, 180),
+    rgb(19, 36, 76)
+  ) !important;
+}
+.ant-menu-inline.ant-menu-root .ant-menu-item > .ant-menu-title-content,
+.ant-menu-inline.ant-menu-root
+  .ant-menu-submenu-title
+  > .ant-menu-title-content {
+  flex: auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: rgb(127, 127, 127);
 }
 Header {
   display: flex;
@@ -70,11 +88,10 @@ Header .head-right {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #fff;
 }
-Header .head-left{
-  width: 150px;
-}
-Header .head-middle{
+
+Header .head-middle {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,12 +103,24 @@ Header .head-left span {
   padding: 2px;
   border: solid 1px rgb(209, 206, 206);
 }
+
+Header .ant-divider-vertical {
+  position: relative;
+  top: -0.06em;
+  display: inline-block;
+  height: 2.9em;
+  margin: 0 8px;
+  vertical-align: middle;
+  border-top: 0;
+  border-left: 1px solid rgba(0, 0, 0, 0.06);
+}
+
 Header .head-right {
   display: flex;
 }
 Header .head-right .head-right-img {
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   background-color: brown;
   border-radius: 50%;
 }
@@ -104,7 +133,7 @@ Header .head-right .head-right-text {
 Header .head-right .head-right-text .head-right-text-tittle {
   font-size: 10px;
 }
-.saveBtn{
+.saveBtn {
   border-color: #fff !important;
 }
 .homeBack {
@@ -115,7 +144,7 @@ Header .head-right .head-right-text .head-right-text-tittle {
 }
 
 /* 主体公司 */
-.mainCompany{
+.mainCompany {
   display: flex;
   width: 130px;
   height: 32px;
@@ -129,14 +158,14 @@ Header .head-right .head-right-text .head-right-text-tittle {
   cursor: pointer;
   font-weight: 200;
 }
-.mainCompany-active{
-  border: 1px solid rgb(8, 208, 244) ;
+.mainCompany-active {
+  border: 1px solid rgb(8, 208, 244);
   color: rgb(8, 208, 244);
   font-weight: 200;
 }
 
-.iconfont{
-  font-size: 22px !important;
+.iconfont {
+  font-size: 22px ;
   cursor: pointer;
   opacity: 0.5;
 }

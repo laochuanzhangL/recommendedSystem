@@ -8,6 +8,10 @@
   font-size: 30px;
 }
 
+.ms-input{
+  border-style: none;
+}
+
 /* 企业经营情况表格里的大标题 */
 .ms-big-title {
   font-size: 20px;
@@ -35,8 +39,8 @@
 }
 
 /* 资质单元格 */
-.ms-qua-info-td {
-  width: 220px;
+.ms-qua-info-td{
+  width: 325px;
 }
 
 .ant-select-selector {
