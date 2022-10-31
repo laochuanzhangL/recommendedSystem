@@ -163,8 +163,6 @@ export default function SituationTable(props) {
     setcostRelatedList(costRelatedList)
   }
   
-
-
   useEffect(() => {
     // 订阅表格修改
     const manageEditToken = PubSub.subscribe("manageEdit", (_, basicEdit) => {
@@ -184,10 +182,14 @@ export default function SituationTable(props) {
       });
     });
     return () => {
-      PubSub.unsubscribe(manageEditToken);
-      PubSub.unsubscribe(manageSaveToken);
+      PubSub.unsubscribe(manageEditToken)
+      PubSub.unsubscribe(manageSaveToken)
     };
-  }, []);
+  }, [
+    annualCost,
+    annualTurnover,
+    salesTaxpayer
+  ]);
 
   const showModal = () => {
     setIsModalOpen(true);

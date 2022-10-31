@@ -79,8 +79,8 @@ export function Register(props) {
   const onFinish = (values) => {
     console.log(values);
     const params={
-      code: "",
-      mobile: "",
+      code: "123",
+      mobile: "15922852538",
       password: values.password,
       uid: values.userId
     }

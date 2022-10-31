@@ -6,53 +6,46 @@ import moment from "moment";
 import httpUtil from "../../../../../../utils/httpUtil";
 
 export default function BasicInfoTable(props) {
-  const basicInfoData = props.basicInfoData
+  const basicInfoData = props.basicInfoData;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [basicEdit, setBasicEdit] = useState(false);
 
   const dateFormat = "YYYY-MM-DD";
 
   // 企业基本信息
-  const [enterpriseName, setenterpriseName] = useState(basicInfoData.enterpriseName);
+  const [enterpriseName, setenterpriseName] = useState(
+    basicInfoData.enterpriseName
+  );
   const [taxpayernum, settaxpayernum] = useState(basicInfoData.taxpayernum);
-  const [establishTime, setestablishTime] = useState(basicInfoData.establishTime);
-  const [registeredCapital, setregisteredCapital] = useState(basicInfoData.registeredCapital);
+  const [establishTime, setestablishTime] = useState(
+    basicInfoData.establishTime
+  );
+  const [registeredCapital, setregisteredCapital] = useState(
+    basicInfoData.registeredCapital
+  );
   const [legalPerson, setlegalPerson] = useState(basicInfoData.legalPerson);
   const [personNum, setpersonNum] = useState(basicInfoData.personNum);
   const [totalAssets, settotalAssets] = useState(basicInfoData.totalAssets);
-  const [investmentAbroad, setinvestmentAbroad] = useState(basicInfoData.investmentAbroad);
-  const [enterpriseType, setenterpriseType] = useState(basicInfoData.enterpriseType);
+  const [investmentAbroad, setinvestmentAbroad] = useState(
+    basicInfoData.investmentAbroad
+  );
+  const [enterpriseType, setenterpriseType] = useState(
+    basicInfoData.enterpriseType
+  );
   const [businessList, setbusinessList] = useState(basicInfoData.businessList);
-  const [shareholderInfo, setshareholderInfo] = useState(basicInfoData.shareholderInfo);
+  const [shareholderInfo, setshareholderInfo] = useState(
+    basicInfoData.shareholderInfo
+  );
   const [investee, setinvestee] = useState(basicInfoData.investee);
-  const [taxpayerQualification, settaxpayerQualification] = useState(basicInfoData.taxpayerQualification);
+  const [taxpayerQualification, settaxpayerQualification] = useState(
+    basicInfoData.taxpayerQualification
+  );
   const [invoiceType, setinvoiceType] = useState(basicInfoData.invoiceType);
   const [taxRate, settaxRate] = useState(basicInfoData.taxRate);
 
   // 获取登录的用户信息
   const uid = localStorage.getItem("uid");
   const enterpriseKey = sessionStorage.getItem("savedKey");
-
-
-  const params = {
-    enterpriseKey: enterpriseKey!==""?enterpriseKey:"",
-    enterpriseName,
-    taxpayernum,
-    establishTime,
-    registeredCapital,
-    legalPerson,
-    personNum:parseInt(personNum),
-    totalAssets:parseInt(totalAssets),
-    investmentAbroad,
-    enterpriseType,
-    businessList,
-    shareholderInfo,
-    investee,
-    taxpayerQualification,
-    invoiceType,
-    taxRate,
-    uid,
-  };
 
   useEffect(() => {
     // 订阅表格修改
@@ -64,12 +57,36 @@ export default function BasicInfoTable(props) {
     });
     // 保存表格
     const basicSaveToken = PubSub.subscribe("basicSave", (_, basicSave) => {
+      const params = {
+        enterpriseKey: enterpriseKey !== "" ? enterpriseKey : "",
+        enterpriseName,
+        taxpayernum,
+        establishTime,
+        registeredCapital,
+        legalPerson,
+        personNum: parseInt(personNum),
+        totalAssets: parseInt(totalAssets),
+        investmentAbroad,
+        enterpriseType,
+        businessList,
+        shareholderInfo,
+        investee,
+        taxpayerQualification,
+        invoiceType,
+        taxRate,
+        uid,
+        industryId: 1,
+      };
+      console.log(params);
       httpUtil.saveEnterpriseBasicMsg(params).then((res) => {
-        const {code,data:{enterprise_key}} = res
-        if(code==200){
-          message.success("保存成功!")
+        const {
+          code,
+          data: { enterprise_key },
+        } = res;
+        if (code == 200) {
+          message.success("保存成功!");
           console.log(enterprise_key);
-          PubSub.publish("basicSaved",enterprise_key)
+          PubSub.publish("basicSaved", enterprise_key);
         }
       });
     });
@@ -77,7 +94,20 @@ export default function BasicInfoTable(props) {
       PubSub.unsubscribe(basicEditToken);
       PubSub.unsubscribe(basicSaveToken);
     };
-  }, []);
+  }, [
+    enterpriseName,
+    taxpayernum,
+    establishTime,
+    registeredCapital,
+    legalPerson,
+    personNum,
+    totalAssets,
+    investmentAbroad,
+    enterpriseType,
+    taxpayerQualification,
+    invoiceType,
+    taxRate,
+  ]);
 
   // 判断是否对外投资展示不一样的表格内容
   function isForeignInvest() {
@@ -147,7 +177,7 @@ export default function BasicInfoTable(props) {
         <tr className="cbi-table-row">
           <td className="cbi-title-td">成立时间</td>
           <td className="cbi-tb-info-td" colSpan={2}>
-            <DatePicker
+            {/* <DatePicker
               allowClear={false}
               bordered={false}
               disabled={!basicEdit}
@@ -159,6 +189,19 @@ export default function BasicInfoTable(props) {
               onBlur={(e) => {
                 const establishTime = e.target.value;
                 setestablishTime(moment(establishTime, dateFormat));
+              }}
+            /> */}
+            <input
+              bordered={false}
+              disabled={!basicEdit}
+              type="text"
+              name="founded-time"
+              className="cbi-input"
+              placeholder=""
+              defaultValue={establishTime}
+              onBlur={(e) => {
+                const establishTime = e.target.value;
+                setestablishTime(establishTime);
               }}
             />
           </td>
@@ -428,15 +471,15 @@ export default function BasicInfoTable(props) {
               defaultValue={shareholderInfo[0] ? shareholderInfo[0].name : ""}
               onBlur={(e) => {
                 const name = e.target.value;
-                if (shareholderInfo.length==0) {
-                  shareholderInfo.splice(0,0,{
+                if (shareholderInfo.length == 0) {
+                  shareholderInfo.splice(0, 0, {
                     name,
-                    proportion:""
-                  })
-                  setshareholderInfo(shareholderInfo)
-                }else{
-                  shareholderInfo[0].name=name
-                  setshareholderInfo(shareholderInfo)
+                    proportion: "",
+                  });
+                  setshareholderInfo(shareholderInfo);
+                } else {
+                  shareholderInfo[0].name = name;
+                  setshareholderInfo(shareholderInfo);
                 }
                 console.log(shareholderInfo);
               }}
@@ -454,15 +497,15 @@ export default function BasicInfoTable(props) {
               }
               onBlur={(e) => {
                 const proportion = e.target.value;
-                if (shareholderInfo.length==0) {
-                  shareholderInfo.splice(0,0,{
-                    name:"",
-                    proportion
-                  })
-                  setshareholderInfo(shareholderInfo)
-                }else{
-                  shareholderInfo[0].proportion=proportion
-                  setshareholderInfo(shareholderInfo)
+                if (shareholderInfo.length == 0) {
+                  shareholderInfo.splice(0, 0, {
+                    name: "",
+                    proportion,
+                  });
+                  setshareholderInfo(shareholderInfo);
+                } else {
+                  shareholderInfo[0].proportion = proportion;
+                  setshareholderInfo(shareholderInfo);
                 }
                 console.log(shareholderInfo);
               }}
@@ -481,15 +524,15 @@ export default function BasicInfoTable(props) {
               defaultValue={shareholderInfo[1] ? shareholderInfo[1].name : ""}
               onBlur={(e) => {
                 const name = e.target.value;
-                if (shareholderInfo.length==1) {
-                  shareholderInfo.splice(1,0,{
+                if (shareholderInfo.length == 1) {
+                  shareholderInfo.splice(1, 0, {
                     name,
-                    proportion:""
-                  })
-                  setshareholderInfo(shareholderInfo)
-                }else{
-                  shareholderInfo[1].name=name
-                  setshareholderInfo(shareholderInfo)
+                    proportion: "",
+                  });
+                  setshareholderInfo(shareholderInfo);
+                } else {
+                  shareholderInfo[1].name = name;
+                  setshareholderInfo(shareholderInfo);
                 }
                 console.log(shareholderInfo);
               }}
@@ -507,15 +550,15 @@ export default function BasicInfoTable(props) {
               }
               onBlur={(e) => {
                 const proportion = e.target.value;
-                if (shareholderInfo.length==1) {
-                  shareholderInfo.splice(1,0,{
-                    name:"",
-                    proportion
-                  })
-                  setshareholderInfo(shareholderInfo)
-                }else{
-                  shareholderInfo[1].proportion=proportion
-                  setshareholderInfo(shareholderInfo)
+                if (shareholderInfo.length == 1) {
+                  shareholderInfo.splice(1, 0, {
+                    name: "",
+                    proportion,
+                  });
+                  setshareholderInfo(shareholderInfo);
+                } else {
+                  shareholderInfo[1].proportion = proportion;
+                  setshareholderInfo(shareholderInfo);
                 }
                 console.log(shareholderInfo);
               }}
@@ -533,15 +576,15 @@ export default function BasicInfoTable(props) {
               defaultValue={shareholderInfo[2] ? shareholderInfo[2].name : ""}
               onBlur={(e) => {
                 const name = e.target.value;
-                if (shareholderInfo.length==2) {
-                  shareholderInfo.splice(2,0,{
+                if (shareholderInfo.length == 2) {
+                  shareholderInfo.splice(2, 0, {
                     name,
-                    proportion:""
-                  })
-                  setshareholderInfo(shareholderInfo)
-                }else{
-                  shareholderInfo[2].name=name
-                  setshareholderInfo(shareholderInfo)
+                    proportion: "",
+                  });
+                  setshareholderInfo(shareholderInfo);
+                } else {
+                  shareholderInfo[2].name = name;
+                  setshareholderInfo(shareholderInfo);
                 }
                 console.log(shareholderInfo);
               }}
@@ -559,15 +602,15 @@ export default function BasicInfoTable(props) {
               }
               onBlur={(e) => {
                 const proportion = e.target.value;
-                if (shareholderInfo.length==2) {
-                  shareholderInfo.splice(2,0,{
-                    name:"",
-                    proportion
-                  })
-                  setshareholderInfo(shareholderInfo)
-                }else{
-                  shareholderInfo[2].proportion=proportion
-                  setshareholderInfo(shareholderInfo)
+                if (shareholderInfo.length == 2) {
+                  shareholderInfo.splice(2, 0, {
+                    name: "",
+                    proportion,
+                  });
+                  setshareholderInfo(shareholderInfo);
+                } else {
+                  shareholderInfo[2].proportion = proportion;
+                  setshareholderInfo(shareholderInfo);
                 }
                 console.log(shareholderInfo);
               }}
@@ -599,16 +642,16 @@ export default function BasicInfoTable(props) {
                   }
                   onBlur={(e) => {
                     const name = e.target.value;
-                    if (investee.length==0) {
-                      investee.splice(0,0,{
+                    if (investee.length == 0) {
+                      investee.splice(0, 0, {
                         name,
-                        proportion:"",
-                        mainProject:""
-                      })
-                      setinvestee(investee)
-                    }else{
-                      investee[0].name=name
-                      setinvestee(investee)
+                        proportion: "",
+                        mainProject: "",
+                      });
+                      setinvestee(investee);
+                    } else {
+                      investee[0].name = name;
+                      setinvestee(investee);
                     }
                     console.log(investee);
                   }}
@@ -630,16 +673,16 @@ export default function BasicInfoTable(props) {
                   }
                   onBlur={(e) => {
                     const proportion = e.target.value;
-                    if (investee.length==0) {
-                      investee.splice(0,0,{
-                        name:"",
+                    if (investee.length == 0) {
+                      investee.splice(0, 0, {
+                        name: "",
                         proportion,
-                        mainProject:""
-                      })
-                      setinvestee(investee)
-                    }else{
-                      investee[0].proportion=proportion
-                      setinvestee(investee)
+                        mainProject: "",
+                      });
+                      setinvestee(investee);
+                    } else {
+                      investee[0].proportion = proportion;
+                      setinvestee(investee);
                     }
                     console.log(investee);
                   }}
@@ -661,16 +704,16 @@ export default function BasicInfoTable(props) {
                   }
                   onBlur={(e) => {
                     const mainProject = e.target.value;
-                    if (investee.length==0) {
-                      investee.splice(0,0,{
-                        name:"",
-                        proportion:"",
-                        mainProject
-                      })
-                      setinvestee(investee)
-                    }else{
-                      investee[0].mainProject=mainProject
-                      setinvestee(investee)
+                    if (investee.length == 0) {
+                      investee.splice(0, 0, {
+                        name: "",
+                        proportion: "",
+                        mainProject,
+                      });
+                      setinvestee(investee);
+                    } else {
+                      investee[0].mainProject = mainProject;
+                      setinvestee(investee);
                     }
                     console.log(investee);
                   }}
@@ -694,16 +737,16 @@ export default function BasicInfoTable(props) {
                   }
                   onBlur={(e) => {
                     const name = e.target.value;
-                    if (investee.length==1) {
-                      investee.splice(1,0,{
+                    if (investee.length == 1) {
+                      investee.splice(1, 0, {
                         name,
-                        proportion:"",
-                        mainProject:""
-                      })
-                      setinvestee(investee)
-                    }else{
-                      investee[1].name=name
-                      setinvestee(investee)
+                        proportion: "",
+                        mainProject: "",
+                      });
+                      setinvestee(investee);
+                    } else {
+                      investee[1].name = name;
+                      setinvestee(investee);
                     }
                     console.log(investee);
                   }}
@@ -725,16 +768,16 @@ export default function BasicInfoTable(props) {
                   }
                   onBlur={(e) => {
                     const proportion = e.target.value;
-                    if (investee.length==1) {
-                      investee.splice(1,0,{
-                        name:"",
+                    if (investee.length == 1) {
+                      investee.splice(1, 0, {
+                        name: "",
                         proportion,
-                        mainProject:""
-                      })
-                      setinvestee(investee)
-                    }else{
-                      investee[1].proportion=proportion
-                      setinvestee(investee)
+                        mainProject: "",
+                      });
+                      setinvestee(investee);
+                    } else {
+                      investee[1].proportion = proportion;
+                      setinvestee(investee);
                     }
                     console.log(investee);
                   }}
@@ -756,16 +799,16 @@ export default function BasicInfoTable(props) {
                   }
                   onBlur={(e) => {
                     const mainProject = e.target.value;
-                    if (investee.length==1) {
-                      investee.splice(1,0,{
-                        name:"",
-                        proportion:"",
-                        mainProject
-                      })
-                      setinvestee(investee)
-                    }else{
-                      investee[1].mainProject=mainProject
-                      setinvestee(investee)
+                    if (investee.length == 1) {
+                      investee.splice(1, 0, {
+                        name: "",
+                        proportion: "",
+                        mainProject,
+                      });
+                      setinvestee(investee);
+                    } else {
+                      investee[1].mainProject = mainProject;
+                      setinvestee(investee);
                     }
                     console.log(investee);
                   }}
@@ -789,16 +832,16 @@ export default function BasicInfoTable(props) {
                   }
                   onBlur={(e) => {
                     const name = e.target.value;
-                    if (investee.length==2) {
-                      investee.splice(2,0,{
+                    if (investee.length == 2) {
+                      investee.splice(2, 0, {
                         name,
-                        proportion:"",
-                        mainProject:""
-                      })
-                      setinvestee(investee)
-                    }else{
-                      investee[2].name=name
-                      setinvestee(investee)
+                        proportion: "",
+                        mainProject: "",
+                      });
+                      setinvestee(investee);
+                    } else {
+                      investee[2].name = name;
+                      setinvestee(investee);
                     }
                     console.log(investee);
                   }}
@@ -820,16 +863,16 @@ export default function BasicInfoTable(props) {
                   }
                   onBlur={(e) => {
                     const proportion = e.target.value;
-                    if (investee.length==2) {
-                      investee.splice(2,0,{
-                        name:"",
+                    if (investee.length == 2) {
+                      investee.splice(2, 0, {
+                        name: "",
                         proportion,
-                        mainProject:""
-                      })
-                      setinvestee(investee)
-                    }else{
-                      investee[2].proportion=proportion
-                      setinvestee(investee)
+                        mainProject: "",
+                      });
+                      setinvestee(investee);
+                    } else {
+                      investee[2].proportion = proportion;
+                      setinvestee(investee);
                     }
                     console.log(investee);
                   }}
@@ -851,16 +894,16 @@ export default function BasicInfoTable(props) {
                   }
                   onBlur={(e) => {
                     const mainProject = e.target.value;
-                    if (investee.length==2) {
-                      investee.splice(2,0,{
-                        name:"",
-                        proportion:"",
-                        mainProject
-                      })
-                      setinvestee(investee)
-                    }else{
-                      investee[2].mainProject=mainProject
-                      setinvestee(investee)
+                    if (investee.length == 2) {
+                      investee.splice(2, 0, {
+                        name: "",
+                        proportion: "",
+                        mainProject,
+                      });
+                      setinvestee(investee);
+                    } else {
+                      investee[2].mainProject = mainProject;
+                      setinvestee(investee);
                     }
                     console.log(investee);
                   }}
@@ -983,11 +1026,11 @@ export default function BasicInfoTable(props) {
               name="tax-rate"
               className="cbi-input"
               defaultValue={taxRate}
-              onBlur={(e)=>{
-                const taxrate = e.target.value
-                if(taxRate.length==0){
-                  taxRate.push(taxrate)
-                  settaxRate(taxRate)
+              onBlur={(e) => {
+                const taxrate = e.target.value;
+                if (taxRate.length == 0) {
+                  taxRate.push(taxrate);
+                  settaxRate(taxRate);
                 }
               }}
             />

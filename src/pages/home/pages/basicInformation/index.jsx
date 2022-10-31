@@ -8,8 +8,6 @@ import moment from "moment";
 import "./index.css";
 
 export default function Basic() {
-  const dateFormat = "YYYY-MM-DD";
-  let date = new Date();
   // 获得uid
   const uid = localStorage.getItem("uid");
 
@@ -19,10 +17,7 @@ export default function Basic() {
     enterpriseKey: "",
     enterpriseName: "",
     taxpayernum: "",
-    establishTime: moment(
-      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(),
-      dateFormat
-    ),
+    establishTime: "",
     registeredCapital: "",
     legalPerson: "",
     personNum: "",
